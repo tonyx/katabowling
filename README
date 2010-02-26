@@ -23,7 +23,7 @@ Ho indicato un po' di vincoli tramite precondizioni attraverso un framework legg
 
 Esempio: un frame che ha 10 birilli abbattuti nel primo lancio, non puo' avere un secondo lancio.
 Un LastFrame che non abbatte10 birilli al secondo lancio,  non ne puo' avere uno ulteriore, e analogamente se il secondo non abbatte 10 birilli, non ne puo' avere uno ulteriore.
-Le precondizioni di LastFrame violano il dbc stesso, e quindi anche LSP.
+Le precondizioni di LastFrame violano il dbc stesso perche' sono diverse (e non ne sono estensioni) delle rispettive preconditioni della classe base, e quindi viene violato  LSP.
 
 Non conosco le regole del bowling marziano e venusiano, ma dubito che l'implementazione proposta sia gia' chiusa rispetto a queste due varianti.
 
