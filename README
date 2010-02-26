@@ -19,7 +19,7 @@ if (frames[i] is LastFrame ) ... (per dire che nell'ultimo frame le regole sono 
 Comuqnue credo sia da rifattorizzare, per esempio usando un'interfaccia frame che preveda un numero variabile di rollate.
 Con questo riconduco ad un discorso OCP anche il concetto di frame.
 
-Ho indicato un po' di vincoli tramite precondizioni attraverso un framework leggero di dbc.
+Ho indicato un po' di vincoli tramite precondizioni attraverso un framework leggero di dbc: http://www.codeproject.com/KB/cs/designbycontract.aspx
 
 Esempio: un frame che ha 10 birilli abbattuti nel primo lancio, non puo' avere un secondo lancio.
 Un LastFrame che non abbatte10 birilli al secondo lancio,  non ne puo' avere uno ulteriore, e analogamente se il secondo non abbatte 10 birilli, non ne puo' avere uno ulteriore.
