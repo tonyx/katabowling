@@ -52,7 +52,7 @@ namespace ocpBowling
         [Test]
         public void TestFirstIsStricke()
         {
-            Frame firstFrame = new Frame(10, 0);
+            Frame firstFrame = new Frame(10);
             Frame secondFrame = new Frame(1, 1);
             Bowling game = KataGameFactory.getTerrestrialBowling();
             game.AddFrame(firstFrame);
@@ -88,7 +88,7 @@ namespace ocpBowling
         public void TestLastRollWithNoStrike()
         {
             Bowling game = KataGameFactory.getTerrestrialBowling();
-            Frame strike = new Frame(10, 0);
+            Frame strike = new Frame(10);
             for (int i = 0; i < 9; i++)
             {
                 game.AddFrame(strike);
@@ -104,7 +104,7 @@ namespace ocpBowling
         public void TestAllStrickeandLastRollIsTen()
         {
             Bowling game = KataGameFactory.getTerrestrialBowling();
-            Frame strike = new Frame(10, 0);
+            Frame strike = new Frame(10);
             for (int i = 0; i < 9; i++)
             {
                 game.AddFrame(strike);
@@ -121,7 +121,7 @@ namespace ocpBowling
         public void testStrikeAll()
         {
             Bowling game = KataGameFactory.getTerrestrialBowling();
-            Frame strike = new Frame(10, 0);
+            Frame strike = new Frame(10);
             for (int i = 0; i < 9; i++)
             {
                 game.AddFrame(strike);
@@ -139,7 +139,7 @@ namespace ocpBowling
         public void testPerfectStrike()
         {
             Bowling game = KataGameFactory.getTerrestrialBowling();
-            Frame strike = new Frame(10, 0);
+            Frame strike = new Frame(10);
             for (int i = 0; i < 9; i++)
             {
                 game.AddFrame(strike);
@@ -184,7 +184,7 @@ namespace ocpBowling
         public void TestFirstThreeAreStrikes()
         {
             Bowling game = KataGameFactory.getTerrestrialBowling();
-            Frame frame = new Frame(10, 0);
+            Frame frame = new Frame(10);
             Frame emptyFrame = new Frame(0, 0);
             game.AddFrame(frame);
             game.AddFrame(frame);
@@ -201,7 +201,7 @@ namespace ocpBowling
         public void TestFirstThooAreStrikes()
         {
             Bowling game = KataGameFactory.getTerrestrialBowling();
-            Frame frame = new Frame(10, 0);
+            Frame frame = new Frame(10);
             Frame emptyFrame = new Frame(0, 0);
             game.AddFrame(frame);
             game.AddFrame(frame);
@@ -218,7 +218,7 @@ namespace ocpBowling
         public void TestAllStrickeButLast()
         {
             Bowling game = KataGameFactory.getTerrestrialBowling();
-            Frame frame = new Frame(10, 0);
+            Frame frame = new Frame(10);
             Frame emptyFrame = new Frame(0, 0);
             for (int i = 0; i < 9; i++)
             {
@@ -233,8 +233,7 @@ namespace ocpBowling
         public void TestAllStrickeButLastTen()
         {
             Bowling game = KataGameFactory.getTerrestrialBowling();
-            Frame frame = new Frame(10, 0);
-            Frame emptyFrame = new Frame(0, 0);
+            Frame frame = new Frame(10);
             for (int i = 0; i < 9; i++)
             {
                 game.AddFrame(frame);
@@ -248,8 +247,7 @@ namespace ocpBowling
         public void TestAllStrickeButLastTwo()
         {
             Bowling game = KataGameFactory.getTerrestrialBowling();
-            Frame frame = new Frame(10, 0);
-            Frame emptyFrame = new Frame(0, 0);
+            Frame frame = new Frame(10);
             for (int i = 0; i < 9; i++)
             {
                 game.AddFrame(frame);
@@ -258,7 +256,5 @@ namespace ocpBowling
 
             Assert.AreEqual(291, game.Score());
         }
-
-
     }
 }

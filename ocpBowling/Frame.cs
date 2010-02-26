@@ -6,9 +6,16 @@ namespace ocpBowling
         protected int first;
         protected int second;
 
+
+        public Frame(int first)
+        {
+            Check.Require(first==10);
+            this.first = first;
+        }
+
         public Frame(int first, int second)
         {
-            Check.Require(first + second <= 10);
+            Check.Require((first!=10)&&(first + second <= 10));
             this.first = first;
             this.second = second;
         }
