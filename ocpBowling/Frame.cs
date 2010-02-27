@@ -6,7 +6,6 @@ namespace ocpBowling
         protected int first;
         protected int second;
 
-
         public Frame(int first)
         {
             Check.Require(first==10);
