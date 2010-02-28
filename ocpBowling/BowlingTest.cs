@@ -13,20 +13,18 @@ namespace ocpBowling
             game = KataGameFactory.getTerrestrialBowling();   
         }
 
-
         [Test]
         public void TestAllZeroes()
         {
             Frame frame = new Frame(0,0);
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < 10; i++)
             {
                 game.AddFrame(frame);
             }
-            LastFrame lastFrame = new LastFrame(0);
-
-            game.AddFrame(lastFrame);
             Assert.AreEqual(0, game.Score());
         }
+
+
 
         [Test]
         public void TestPlaingGameNoSpareOrStrikes()
@@ -36,8 +34,8 @@ namespace ocpBowling
             {
                 game.AddFrame(frame);
             }
-            LastFrame lastFrame = new LastFrame(1);
-            game.AddFrame(lastFrame);
+            Frame Frame = new Frame(1);
+            game.AddFrame(Frame);
             Assert.AreEqual(19, game.Score());
         }
 
@@ -55,8 +53,8 @@ namespace ocpBowling
             {
                 game.AddFrame(emptyFrame);    
             }
-            LastFrame lastFrame = new LastFrame(0);
-            game.AddFrame(lastFrame);
+            Frame Frame = new Frame(0);
+            game.AddFrame(Frame);
 
             Assert.AreEqual(12, game.Score());
         }
@@ -76,8 +74,8 @@ namespace ocpBowling
             {
                 game.AddFrame(emptyFrame);
             }
-            LastFrame lastFrame = new LastFrame(0);
-            game.AddFrame(lastFrame);
+            Frame Frame = new Frame(0);
+            game.AddFrame(Frame);
 
             Assert.AreEqual(14, game.Score());
         }
@@ -86,13 +84,13 @@ namespace ocpBowling
         [Test]
         public void TestLastRollGetAnotherRollIfThereIsAstrike()
         {            
-            Frame lastFrame = new LastFrame(10,1);
+            Frame Frame = new Frame(10,1);
             Frame emtpyFrame = new Frame(0,0);
             for (int i = 0; i < 9; i++)
             {
                 game.AddFrame(emtpyFrame);
             }
-            game.AddFrame(lastFrame);
+            game.AddFrame(Frame);
             Assert.AreEqual(11, game.Score());
         }
 
@@ -105,7 +103,7 @@ namespace ocpBowling
             {
                 game.AddFrame(strike);
             }
-            Frame lastStrike = new LastFrame(0);
+            Frame lastStrike = new Frame(0);
             game.AddFrame(lastStrike);
 
             Assert.AreEqual(240, game.Score());
@@ -120,7 +118,7 @@ namespace ocpBowling
             {
                 game.AddFrame(strike);
             }
-            Frame lastStrike = new LastFrame(10,0);
+            Frame lastStrike = new Frame(10,0);
             game.AddFrame(lastStrike);
 
             Assert.AreEqual(270, game.Score());
@@ -137,7 +135,7 @@ namespace ocpBowling
                 game.AddFrame(strike);
             }
 
-            Frame lastStrike = new LastFrame(10,10,1);
+            Frame lastStrike = new Frame(10,10,1);
             game.AddFrame(lastStrike);
             Assert.AreEqual(291, game.Score());
             
@@ -153,7 +151,7 @@ namespace ocpBowling
             {
                 game.AddFrame(strike);
             }
-            Frame lastStrike = new LastFrame(10,10,10);
+            Frame lastStrike = new Frame(10,10,10);
             game.AddFrame(lastStrike);
 
             Assert.AreEqual(300, game.Score());
@@ -168,8 +166,8 @@ namespace ocpBowling
             {
                 game.AddFrame(noPoints);
             }
-            Frame lastFrame = new LastFrame(10,1);
-            game.AddFrame(lastFrame);
+            Frame Frame = new Frame(10,1);
+            game.AddFrame(Frame);
             Assert.AreEqual(11, game.Score());
 
         }
@@ -183,9 +181,9 @@ namespace ocpBowling
                 game.AddFrame(noPoints);
             }
 
-            Frame lastFrame = new LastFrame(10,10,1);
+            Frame Frame = new Frame(10,10,1);
 
-            game.AddFrame(lastFrame);
+            game.AddFrame(Frame);
             Assert.AreEqual(21, game.Score());
         }
 
@@ -201,8 +199,8 @@ namespace ocpBowling
             {
                 game.AddFrame(emptyFrame);
             }
-            LastFrame lastFrame = new LastFrame(0);
-            game.AddFrame(lastFrame);
+            Frame Frame = new Frame(0);
+            game.AddFrame(Frame);
             Assert.AreEqual(60, game.Score());
         }
 
@@ -217,8 +215,8 @@ namespace ocpBowling
             {
                 game.AddFrame(emptyFrame);
             }
-            LastFrame lastFrame = new LastFrame(0);
-            game.AddFrame(lastFrame);
+            Frame Frame = new Frame(0);
+            game.AddFrame(Frame);
 
             Assert.AreEqual(30, game.Score());
         }
@@ -231,8 +229,8 @@ namespace ocpBowling
             {
                 game.AddFrame(frame);
             }
-            LastFrame lastFrame = new LastFrame(0);
-            game.AddFrame(lastFrame);
+            Frame Frame = new Frame(0);
+            game.AddFrame(Frame);
 
             Assert.AreEqual(240, game.Score());
         }
@@ -246,8 +244,8 @@ namespace ocpBowling
             {
                 game.AddFrame(frame);
             }
-            Frame lastFrame = new LastFrame(10,0);
-            game.AddFrame(lastFrame);
+            Frame Frame = new Frame(10,0);
+            game.AddFrame(Frame);
 
             Assert.AreEqual(270, game.Score());
         }
@@ -260,8 +258,8 @@ namespace ocpBowling
             {
                 game.AddFrame(frame);
             }
-            LastFrame lastFrame = new LastFrame(10,10,1);
-            game.AddFrame(lastFrame);
+            Frame Frame = new Frame(10,10,1);
+            game.AddFrame(Frame);
 
             Assert.AreEqual(291, game.Score());
         }

@@ -17,7 +17,8 @@
             }
             if (i==frames.Length-2)
             {
-                LastFrame lastFrame = ((LastFrame) frames[frames.Length - 1]);
+//                LastFrame lastFrame = ((LastFrame) frames[frames.Length - 1]);
+                Frame lastFrame = ( frames[frames.Length - 1]);
                 if (Strike(frames[i]))
                     return lastFrame.SumOfFirstTwo();
 

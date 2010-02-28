@@ -7,19 +7,11 @@ namespace ocpBowling
 {
     public class Frame : Iframe
     {
-//        public List<Rule> rules;
         public List<int> rollsInFrame;
 
-        private void Init()
-        {
-//            rules = new List<Rule>();
-//            rules.Add(new StrikeRule());
-//            rules.Add(new SpareRule());
-        }
 
         public Frame(params int[] args)
         {
-            Init();
             rollsInFrame = args.ToList();
         }
 
