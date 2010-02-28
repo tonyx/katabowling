@@ -6,9 +6,8 @@ namespace ocpBowling
     public interface Bowling
     {
         void Init();
-        void AddRulesForFrame(List<Rule> rules);
+        void AddRulesForFrame(List<RuleForFrame> rules);
         void AddConstraint(Constraint constraint);
-        void AddRule(Rule rule);
         void AddFrame(Frame frame);
         int Score();
     }

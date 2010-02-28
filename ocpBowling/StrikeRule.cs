@@ -1,6 +1,6 @@
 ﻿namespace ocpBowling
 {
-    public class StrikeRule : Rule
+    public class StrikeRule : RuleForFrame
     {
         public int Bonus(Frame[] frames, int i)
         {

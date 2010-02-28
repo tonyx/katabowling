@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 namespace ocpBowling
 {
-
-    public class SpareRule : Rule
+    public class SpareRule : RuleForFrame
     {
 
         public int Bonus(Frame[] frames, int i)

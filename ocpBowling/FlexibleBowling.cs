@@ -6,16 +6,15 @@ namespace ocpBowling
     public class FlexibleBowling : Bowling
     {
         private List<Frame> frames = new List<Frame>();
-        private List<Rule> rules = new List<Rule>();
-        private List<Constraint> constraints = new List<Constraint>();
-        private List<List<Rule>> rulesForFrame = new List<List<Rule>>();
+        private List<Constraint> constraintsForFrame = new List<Constraint>();
+        private List<List<RuleForFrame>> rulesForFrame = new List<List<RuleForFrame>>();
 
         private List<Constraint>.Enumerator constraintsEnumerator;
-        private List<List<Rule>>.Enumerator rulesForFrameEnumerator;
+        private List<List<RuleForFrame>>.Enumerator rulesForFrameEnumerator;
 
         public void Init()
         {
-            constraintsEnumerator =  constraints.GetEnumerator();
+            constraintsEnumerator =  constraintsForFrame.GetEnumerator();
             rulesForFrameEnumerator = rulesForFrame.GetEnumerator();
         }
 
@@ -36,44 +35,37 @@ namespace ocpBowling
         private int ComputeBonus(Frame[] frames, int i)
         {
             int toReturn = 0;
-
-            rulesForFrameEnumerator.MoveNext();
-            foreach (Rule rule in rulesForFrameEnumerator.Current)
+            try
             {
-                toReturn += rule.Bonus(frames, i);
-                if (rule.ConditionToBreak(frames, i))
+                rulesForFrameEnumerator.MoveNext();
+                foreach (RuleForFrame rule in rulesForFrameEnumerator.Current)
                 {
-                    break;
-                }                
+                    toReturn += rule.Bonus(frames, i);
+                    if (rule.ConditionToBreak(frames, i))
+                    {
+                        break;
+                    }
+                }
+
+                return toReturn;
+            } catch (InvalidOperationException)
+            {
+                // no rule no bonus
+                return 0;
             }
-
-//            foreach (Rule rule in frames[i].rules)
-//            {
-//                toReturn += rule.Bonus(frames, i);
-//                if (rule.ConditionToBreak(frames, i))
-//                {
-//                    break;
-//                }
-//            }
-
-            return toReturn;
         }
 
         public void AddConstraint(Constraint constraint)
         {
-            constraints.Add(constraint);
+            constraintsForFrame.Add(constraint);
         }
 
         
-        public void AddRulesForFrame(List<Rule> rules)
+        public void AddRulesForFrame(List<RuleForFrame> rules)
         {
             this.rulesForFrame.Add(rules);   
         }
 
-        public void AddRule(Rule rule)
-        {
-            rules.Add(rule);
-        }
 
         private void CheckConstraint(Frame frame)
         {
@@ -85,9 +77,9 @@ namespace ocpBowling
                 {
                     throw new Exception("constraint violation");
                 }
-            } catch
+            } catch 
             {
-                throw new Exception("constraint violation");   
+                throw new Exception("rule error: the constraint rules are mandatories");
             }
         }
 
