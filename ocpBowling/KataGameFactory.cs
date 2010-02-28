@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ocpBowling
 {
@@ -32,8 +33,12 @@ namespace ocpBowling
         public static Bowling getMartianBowling()
         {
             Bowling martianBowling = new FlexibleBowling();
-            martianBowling.AddConstraint(x => x.rollsInFrame.Count<=3);
+            martianBowling.AddConstraint(x => ((x.rollsInFrame.Count == 3 &&  x.rollsInFrame.Sum()<=10)||(x.rollsInFrame.Count<3 && x.rollsInFrame.Sum() == 10)));
+            martianBowling.AddConstraint(x => ((x.rollsInFrame.Count == 3 &&  x.rollsInFrame.Sum()<=10)||(x.rollsInFrame.Count<3 && x.rollsInFrame.Sum() == 10)));
+            martianBowling.AddConstraint(x => ((x.rollsInFrame.Count == 3 &&  x.rollsInFrame.Sum()<=10)||(x.rollsInFrame.Count<3 && x.rollsInFrame.Sum() == 10)));
             martianBowling.AddRulesForFrame(new List<RuleForFrame>{new MartianFrameBonus()});
+            martianBowling.AddRulesForFrame(new List<RuleForFrame>{new MartianFrameBonus()});
+            martianBowling.AddRulesForFrame(new List<RuleForFrame>{new MartianFrameNoBonus()});
             martianBowling.Init();
             return martianBowling;
         }
@@ -42,7 +47,25 @@ namespace ocpBowling
         {
             public int Bonus(Frame[] frames, int i)
             {
-                return frames[i].rollsInFrame[2];
+                if (Strike(frames[i]))
+                    return frames[frames.Length - 1].rollsInFrame.Sum();
+                return 0;
+            }
+            public bool Strike(Frame frame)
+            {
+                return frame.rollsInFrame[0] == 10;
+            }
+
+            public bool ConditionToBreak(Frame[] frames, int i)
+            {
+                return true;
+            }
+        }
+        public class MartianFrameNoBonus : RuleForFrame
+        {
+            public int Bonus(Frame[] frames, int i)
+            {
+                return 0;
             }
 
             public bool ConditionToBreak(Frame[] frames, int i)
