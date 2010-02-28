@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace ocpBowling
 {
@@ -32,11 +33,23 @@ namespace ocpBowling
         {
             Bowling martianBowling = new FlexibleBowling();
             martianBowling.AddConstraint(x => x.rollsInFrame.Count<=3);
+            martianBowling.AddRulesForFrame(new List<RuleForFrame>{new MartianFrameBonus()});
             martianBowling.Init();
             return martianBowling;
         }
-        
 
+        public class MartianFrameBonus : RuleForFrame
+        {
+            public int Bonus(Frame[] frames, int i)
+            {
+                return frames[i].rollsInFrame[2];
+            }
+
+            public bool ConditionToBreak(Frame[] frames, int i)
+            {
+                return true;
+            }
+        }
 
     }
 }
