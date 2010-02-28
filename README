@@ -1,31 +1,19 @@
 
 OCP KATA BOWLING
 
-Il seguente sito calcola il punteggio del bowling, puo' fare da oracolo se qualcosa non torna:
+references: 
+
+riginal bowling kata description: http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata
+
+The ocp kata tecnique forces an open closed implementation. Any new feature should be implementable with extension and no modification. If that is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting design able to implement the new feature by extensions and no modifications, after the refactoring then you de-ignore the test and should be able to make the test pass only adding new classes or modifying the factory.
+
+See http://matteo.vaccari.name/blog/archives/293 
+
+If you need an "oracle" to compute the bowling score, here it is:
 http://tralvex.com/pub/bowling/BSC.htm
 
-Per chi ha linux e mono, probabilmente e' sufficiente compilare tutti i .cs creando un assmebly (.dll) e lanciare nunit dandogli come argomento l'assembly stesso.
+The code has been tested in dot.net framework 3.5
 
-Da dot.net framework e' necessario aver aggiunto uno degli assembly di nunit (credo il core) nella gac, per poter lanciare nunit stesso. Da mono non saprei.
-
-Ho esplicitato il concetto di Frame anche nei test (che sono da rifattorizzare).
-Mi era piu' chiaro cosi' che concentrandomi sul singolo lancio/rollata.
-
-C'e' qualcosa di smelloso, come il fatto di avere esteso la classe Frame in LastFrame per indicare un frame che potenzialmente puo' avere fino a tre slot anziche' solo due. Il decimo frame, che prevede fino a tre lanci possibili.
-
-Incidentalmente questo ha necessitato un controllo di class checking che e' di solito e' considerato ancor piu' pericoloso del subclassing, pero' curiosamente in questo caso e' molto "parlante", visto che la condizione viene verificata con la sintassi
-
-if (frames[i] is LastFrame ) ... (per dire che nell'ultimo frame le regole sono un po' diverse)
-
-Comuqnue credo sia da rifattorizzare, per esempio usando un'interfaccia frame che preveda un numero variabile di rollate.
-Con questo riconduco ad un discorso OCP anche il concetto di frame.
-
-Ho indicato un po' di vincoli tramite precondizioni attraverso un framework leggero di dbc: http://www.codeproject.com/KB/cs/designbycontract.aspx
-
-Esempio: un frame che ha 10 birilli abbattuti nel primo lancio, non puo' avere un secondo lancio.
-Un LastFrame che non abbatte10 birilli al secondo lancio,  non ne puo' avere uno ulteriore, e analogamente se il secondo non abbatte 10 birilli, non ne puo' avere uno ulteriore.
-Le precondizioni di LastFrame violano il dbc stesso perche' sono diverse (e non ne sono estensioni) delle rispettive preconditioni della classe base, e quindi viene violato  LSP.
-
-Non conosco le regole del bowling marziano e venusiano, ma dubito che l'implementazione proposta sia gia' chiusa rispetto a queste due varianti.
+The flexible part of the bowling game instance is the constraints about the frame creation, and the way to compute the bonus.
 
 
