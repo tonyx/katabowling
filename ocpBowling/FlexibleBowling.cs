@@ -25,7 +25,7 @@ namespace ocpBowling
         private int ComputeBonus(Frame[] frames, int i)
         {
             int toReturn = 0;
-            foreach (Rule rule in rules)
+            foreach (Rule rule in frames[i].rules)
             {
                 toReturn += rule.Bonus(frames, i);
                 if (rule.ConditionToBreak(frames, i))

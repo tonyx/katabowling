@@ -9,9 +9,7 @@
 
         public bool ConditionToBreak(Frame[] frames, int i)
         {
-            if (frames[i] is LastFrame )
                 return true;
-            return false;
         }
     }
 }
