@@ -9,23 +9,23 @@
             {
                 if (Strike(frames[i]))
                     if (!Strike(frames[i + 1]))
-                        return frames[i + 1].First + frames[i + 1].Second;
+                        return frames[i + 1].rollsInFrame[0] + frames[i + 1].rollsInFrame[1];
+             //           return frames[i + 1].First + frames[i + 1].Second;
                     else
-                        return frames[i + 1].First + frames[i+2].First;
+             //           return frames[i + 1].First + frames[i+2].First;
+                        return frames[i + 1].rollsInFrame[0]+ frames[i+2].rollsInFrame[0];
             }
             if (i==frames.Length-2)
             {
                 LastFrame lastFrame = ((LastFrame) frames[frames.Length - 1]);
                 if (Strike(frames[i]))
-                    return lastFrame.First + lastFrame.Second;
+                    return lastFrame.SumOfFirstTwo();
+
+                return 0;   
+//                    return lastFrame.rollsInFrame[0] + lastFrame.rollsInFrame[1];
+
             }
 
-        
-
-//            else
-//            {
-//                return (frames[i + 1].First);
-//            }
             return 0;
         }
 
@@ -47,7 +47,8 @@
 
         private bool Strike(Frame frame)
         {
-            return frame.First == 10;
+            return frame.rollsInFrame[0] == 10;
+//            return frame.First == 10;
         }
     }
 }

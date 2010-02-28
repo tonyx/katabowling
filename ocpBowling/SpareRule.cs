@@ -1,13 +1,14 @@
-﻿namespace ocpBowling
+﻿using System.Linq;
+namespace ocpBowling
 {
+
     public class SpareRule : Rule
     {
 
         public int Bonus(Frame[] frames, int i)
         {
             if (Matches(frames, i))
-                return frames[i + 1].First;
-
+                return frames[i + 1].rollsInFrame[0];            
             return 0;
         }
 
@@ -28,7 +29,7 @@
 
         private bool spare(Frame frame)
         {
-            return frame.First + frame.Second == 10;
+            return ((frame.rollsInFrame.Sum(x => x))==10);
         }
 
     }

@@ -1,35 +1,29 @@
 ﻿#define DBC_CHECK_ALL
+
+using System.Collections.Generic;
+using System.Linq;
+
 namespace ocpBowling
 {
     public class Frame
     {
-        protected int first;
-        protected int second;
+ 
+        public List<int> rollsInFrame;
 
-        public Frame(int first)
+        public Frame(params int[] args)
         {
-            Check.Require(first==10);
-            this.first = first;
-        }
-
-        public Frame(int first, int second)
-        {
-            Check.Require((first!=10)&&(first + second <= 10));
-            this.first = first;
-            this.second = second;
-        }
-        protected Frame()
-        {
+            rollsInFrame = args.ToList();
         }
 
-        public int First
+        public int Total()
         {
-            get { return first; }
+            return rollsInFrame.Sum(x => x);
         }
 
-        public int Second
+        public int SumOfFirstTwo()
         {
-            get { return second; }
+            return rollsInFrame.Take(2).Sum();
         }
+                
     }
 }

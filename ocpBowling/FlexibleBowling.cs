@@ -15,10 +15,7 @@ namespace ocpBowling
 
             for (int i = 0; i < theFrames.Length; i++)
             {
-                toReturn += theFrames[i].First;
-                toReturn += theFrames[i].Second;
-                if (theFrames[i] is LastFrame)
-                    toReturn += ((LastFrame)(theFrames[i])).Third;
+                toReturn += theFrames[i].Total();
                 int bonus = ComputeBonus(theFrames, i);
                 toReturn += bonus;
             }
