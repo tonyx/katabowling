@@ -18,7 +18,7 @@ namespace ocpBowling
         [Test]
         public void testMartialBowlingAllowsThreeRollsInAFrame()
         {
-            Frame frame = new Frame(9,9,0);
+            Frame frame = new Frame(9,0,0);
             martianGame.AddFrame(frame);
         }
 
@@ -48,17 +48,7 @@ namespace ocpBowling
             martianGame.AddFrame(frame);
             martianGame.AddFrame(secondFrame);
             martianGame.AddFrame(lastFrame);
-            Assert.AreEqual(17+4,martianGame.Score());
-        }
-
-
-
-        [Test]
-        public void TestMartialBowlingScoreIstheTotalPlusTheThirdScore()
-        {
-            Frame frame = new Frame(9, 9, 1);
-            martianGame.AddFrame(frame);
-            Assert.AreEqual(20,martianGame.Score());
+            Assert.AreEqual(10+3+4+4,martianGame.Score());
         }
 
         [Test]

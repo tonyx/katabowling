@@ -25,10 +25,4 @@ namespace ocpBowling
             return rollsInFrame.Take(2).Sum();
         }                
     }
-
-    public interface Iframe
-    {
-        int Total();
-        int SumOfFirstTwo();
-    }
 }
