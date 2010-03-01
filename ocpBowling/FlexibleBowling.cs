@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Linq;
 namespace ocpBowling
 {
     public class FlexibleBowling : Bowling
@@ -25,7 +25,7 @@ namespace ocpBowling
 
             for (int i = 0; i < theFrames.Length; i++)
             {
-                toReturn += theFrames[i].Total();
+                toReturn += theFrames[i].Rolls.Sum();                
                 int bonus = ComputeBonus(theFrames, i);
                 toReturn += bonus;
             }
@@ -50,7 +50,6 @@ namespace ocpBowling
                 return toReturn;
             } catch (InvalidOperationException)
             {
-                // no rule no bonus
                 return 0;
             }
         }
@@ -63,7 +62,7 @@ namespace ocpBowling
         
         public void AddRulesForFrame(List<RuleForFrame> rules)
         {
-            this.rulesForFrame.Add(rules);   
+            rulesForFrame.Add(rules);   
         }
 
 

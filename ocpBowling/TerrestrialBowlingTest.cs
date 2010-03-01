@@ -6,50 +6,13 @@ namespace ocpBowling
     public class TerrestrialBowlingTest
     {
         private Bowling terrestrialGame;
-        private Bowling martianGame;
         
         [SetUp]
         public void Init()
         {
-            terrestrialGame = KataGameFactory.getTerrestrialBowling();   
-            martianGame = KataGameFactory.getMartianBowling();   
+            terrestrialGame = KataGameFactory.getTerrestrialBowling();                 
         }
 
-        [Test]
-        public void testMartialBowlingAllowsThreeRollsInAFrame()
-        {
-            Frame frame = new Frame(9,0,0);
-            martianGame.AddFrame(frame);
-        }
-
-        [Test]
-        [ExpectedException]
-        public void shouldAllowOnlyThreeRollInAFrame()
-        {
-            Frame frame = new Frame(9, 9);
-            martianGame.AddFrame(frame);
-        }
-        [Test]
-        public void IfStrikeNoNeedForOtherSlots()
-        {
-            Frame frame = new Frame(1,1,1);
-            martianGame.AddFrame(frame);
-            martianGame.AddFrame(frame);
-
-        }
-
-
-        [Test]
-        public void BounsForAnyStrikeIsTheTotalOfLastFrame()
-        {
-            Frame frame = new Frame(10);
-            Frame secondFrame = new Frame(1,1,1);
-            Frame lastFrame = new Frame(2,1,1);
-            martianGame.AddFrame(frame);
-            martianGame.AddFrame(secondFrame);
-            martianGame.AddFrame(lastFrame);
-            Assert.AreEqual(10+3+4+4,martianGame.Score());
-        }
 
         [Test]
         public void TestAllZeroes()
@@ -243,7 +206,7 @@ namespace ocpBowling
         }
 
         [Test]
-        public void TestFirstThooAreStrikes()
+        public void TestFirstTwoAreStrikes()
         {
             Frame frame = new Frame(10);
             Frame emptyFrame = new Frame(0,0);
@@ -305,7 +268,7 @@ namespace ocpBowling
 
         [Test]
         [ExpectedException]
-        public void TestViolateTotalTenRule()
+        public void SingleRollInFrameCannotExceedTenHits()
         {
             Frame frame = new Frame(11);
             terrestrialGame.AddFrame(frame);            

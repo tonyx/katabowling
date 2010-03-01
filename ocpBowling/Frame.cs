@@ -5,10 +5,9 @@ using System.Linq;
 
 namespace ocpBowling
 {
-    public class Frame : Iframe
+    public class Frame 
     {
-        public List<int> rollsInFrame;
-
+        readonly List<int> rollsInFrame;
 
         public Frame(params int[] args)
         {
@@ -20,9 +19,12 @@ namespace ocpBowling
             return rollsInFrame.Sum(x => x);
         }
 
-        public int SumOfFirstTwo()
+        public List<int > Rolls
         {
-            return rollsInFrame.Take(2).Sum();
-        }                
+            get
+            {
+                return rollsInFrame;
+            }
+        }
     }
 }

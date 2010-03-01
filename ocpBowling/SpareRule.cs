@@ -7,7 +7,7 @@ namespace ocpBowling
         public int Bonus(Frame[] frames, int i)
         {
             if (Matches(frames, i))
-                return frames[i + 1].rollsInFrame[0];            
+                return frames[i + 1].Rolls[0];            
             return 0;
         }
 
@@ -28,7 +28,7 @@ namespace ocpBowling
 
         private bool spare(Frame frame)
         {
-            return ((frame.rollsInFrame.Sum(x => x))==10);
+            return ((frame.Rolls.Sum(x => x))==10);
         }
 
     }
