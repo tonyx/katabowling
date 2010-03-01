@@ -25,6 +25,14 @@ namespace bowlingkata
         }
 
         [Test]
+        public void TestToString()
+        {
+            Frame frame = new Frame(9,9,1);
+            Assert.AreEqual("9 9 1 ",frame.ToString());
+        }
+
+
+        [Test]
         [ExpectedException]
         public void shouldNotAllowLessThanThreeRoll()
         {

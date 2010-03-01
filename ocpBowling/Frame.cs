@@ -26,5 +26,10 @@ namespace ocpBowling
                 return rollsInFrame;
             }
         }
+
+        public string ToString()
+        {
+            return Rolls.Aggregate("",(x,y) => x+=(y+" "));
+        }
     }
 }

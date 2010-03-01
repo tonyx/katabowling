@@ -35,9 +35,8 @@ namespace ocpBowling
         private int ComputeBonus(Frame[] frames, int i)
         {
             int toReturn = 0;
-            try
+            if (rulesForFrameEnumerator.MoveNext())
             {
-                rulesForFrameEnumerator.MoveNext();
                 foreach (RuleForFrame rule in rulesForFrameEnumerator.Current)
                 {
                     toReturn += rule.Bonus(frames, i);
@@ -46,12 +45,9 @@ namespace ocpBowling
                         break;
                     }
                 }
-
                 return toReturn;
-            } catch (InvalidOperationException)
-            {
-                return 0;
             }
+            return 0;
         }
 
         public void AddConstraint(Constraint constraint)
@@ -68,18 +64,16 @@ namespace ocpBowling
 
         private void CheckConstraint(Frame frame)
         {
-            try
+            if (constraintsEnumerator.MoveNext())
             {
-                constraintsEnumerator.MoveNext();
                 bool matches = constraintsEnumerator.Current.Invoke(frame);
                 if (!matches)
                 {
-                    throw new Exception("constraint violation");
+                    throw new Exception("violated constraint in frame "+frame.ToString());
                 }
-            } catch 
-            {
-                throw new Exception("rule error: the constraint rules are mandatories");
             }
+            else
+                throw new Exception("rule error: the constraint rules are mandatories");
         }
 
 

@@ -267,7 +267,7 @@ namespace ocpBowling
         }
 
         [Test]
-        [ExpectedException]
+        [ExpectedException(ExpectedMessage = "11", MatchType=MessageMatch.Contains)]
         public void SingleRollInFrameCannotExceedTenHits()
         {
             Frame frame = new Frame(11);
@@ -275,7 +275,7 @@ namespace ocpBowling
         }
 
         [Test]
-        [ExpectedException]
+        [ExpectedException(ExpectedMessage = "10 0",MatchType=MessageMatch.Contains)]
         public void TestThereIsNoSecondRollInAStrike()
         {
             Frame frame = new Frame(10,0);
