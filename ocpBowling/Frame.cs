@@ -14,11 +14,6 @@ namespace ocpBowling
             rollsInFrame = args.ToList();
         }
 
-        public int Total()
-        {
-            return rollsInFrame.Sum(x => x);
-        }
-
         public List<int > Rolls
         {
             get

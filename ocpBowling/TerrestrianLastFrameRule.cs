@@ -1,6 +1,6 @@
 ﻿namespace ocpBowling
 {
-    public class LastFrameRule : RuleForFrame
+    public class TerrestrianLastFrameRule : RuleForFrame
     {
         public int Bonus(Frame[] frames, int i)
         {

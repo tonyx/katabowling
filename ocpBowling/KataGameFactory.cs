@@ -9,10 +9,10 @@ namespace ocpBowling
         public static Bowling getTerrestrialBowling()
         {
             Bowling genericGenericBowling = new FlexibleBowling();
-            List<RuleForFrame> ruleForPlainFrame =   new List<RuleForFrame>(){new StrikeRule(),new SpareRule()};
+            List<RuleForFrame> ruleForPlainFrame =   new List<RuleForFrame>(){new TerrestrianStrikeRule(),new TerrestrianSpareRule()};
             
             List<RuleForFrame> rulesForLastFrame = new List<RuleForFrame>();
-            rulesForLastFrame.Add(new LastFrameRule());
+            rulesForLastFrame.Add(new TerrestrianLastFrameRule());
             for (int i =0;i<9;i++)
                 genericGenericBowling.AddConstraint(x => x.Rolls.Sum()<=10&&((x.Rolls[0]==10&&x.Rolls.Count==1)||(x.Rolls[0]<10&&x.Rolls.Count>1)));            
             genericGenericBowling.AddConstraint(x => x.Rolls.Sum()<=30 && (x.Rolls[0]<10||x.Rolls.Count>1));       

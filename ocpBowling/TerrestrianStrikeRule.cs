@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 namespace ocpBowling
 {
-    public class StrikeRule : RuleForFrame
+    public class TerrestrianStrikeRule : RuleForFrame
     {
         public int Bonus(Frame[] frames, int i)
         {
@@ -19,9 +19,7 @@ namespace ocpBowling
                 Frame lastFrame = ( frames[frames.Length - 1]);
                 if (Strike(frames[i]))
                     return lastFrame.Rolls.Take(2).Sum();
-//                    return lastFrame.SumOfFirstTwo();
                 return 0;   
-
             }
 
             return 0;
@@ -34,7 +32,7 @@ namespace ocpBowling
             return false;
         }
 
-        public bool Matches(Frame[] frames, int i)
+        private bool Matches(Frame[] frames, int i)
         {
             if (i != frames.Length - 1)
                 if (Strike(frames[i]))
@@ -46,7 +44,6 @@ namespace ocpBowling
         private bool Strike(Frame frame)
         {
             return frame.Rolls[0] == 10;
-//            return frame.First == 10;
         }
     }
 }
