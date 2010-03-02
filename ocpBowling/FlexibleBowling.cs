@@ -6,16 +6,16 @@ namespace ocpBowling
     public class FlexibleBowling : Bowling
     {
         private List<Frame> frames = new List<Frame>();
-        private List<Constraint> constraintsForFrame = new List<Constraint>();
         private List<List<RuleForFrame>> rulesForFrame = new List<List<RuleForFrame>>();
+        private List<ConstraintAndDesription> constraintAndDescriptionList = new List<ConstraintAndDesription>();
 
-        private List<Constraint>.Enumerator constraintsEnumerator;
+        private List<ConstraintAndDesription>.Enumerator _constraintsAndDescriptionEnumerator;
         private List<List<RuleForFrame>>.Enumerator rulesForFrameEnumerator;
 
         public void Init()
         {
-            constraintsEnumerator =  constraintsForFrame.GetEnumerator();
             rulesForFrameEnumerator = rulesForFrame.GetEnumerator();
+            _constraintsAndDescriptionEnumerator = constraintAndDescriptionList.GetEnumerator();
         }
 
         public int Score()
@@ -50,12 +50,13 @@ namespace ocpBowling
             return 0;
         }
 
-        public void AddConstraint(Constraint constraint)
+
+        public void AddConstraintAndDescription(ConstraintAndDesription constraintAndDescription)
         {
-            constraintsForFrame.Add(constraint);
+            constraintAndDescriptionList.Add(constraintAndDescription);
         }
 
-        
+
         public void AddRulesForFrame(List<RuleForFrame> rules)
         {
             rulesForFrame.Add(rules);   
@@ -64,12 +65,12 @@ namespace ocpBowling
 
         private void CheckConstraint(Frame frame)
         {
-            if (constraintsEnumerator.MoveNext())
+            if (_constraintsAndDescriptionEnumerator.MoveNext())
             {
-                bool matches = constraintsEnumerator.Current.Invoke(frame);
+                bool matches = _constraintsAndDescriptionEnumerator.Current.TheConstraint.Invoke(frame);
                 if (!matches)
                 {
-                    throw new Exception("violated constraint in frame "+frame.ToString());
+                    throw new Exception("violated constraint "+_constraintsAndDescriptionEnumerator.Current +" in frame "+frame.ToString());
                 }
             }
             else

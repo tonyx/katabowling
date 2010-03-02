@@ -22,7 +22,7 @@ namespace ocpBowling
             }
         }
 
-        public string ToString()
+        public override string ToString()
         {
             return Rolls.Aggregate("",(x,y) => x+=(y+" "));
         }

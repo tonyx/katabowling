@@ -22,9 +22,12 @@ namespace ocpBowling
             Constraint upToThreeRollsUnlessDropTenEarlier =
                 x => ((x.Rolls.Count == 3 && x.Rolls.Sum() <= 10) || (x.Rolls.Count < 3 && x.Rolls.Sum() == 10));
             
-            martianBowling.AddConstraint(upToThreeRollsUnlessDropTenEarlier);
-            martianBowling.AddConstraint(upToThreeRollsUnlessDropTenEarlier);
-            martianBowling.AddConstraint(upToThreeRollsUnlessDropTenEarlier);
+            ConstraintAndDesription upToThreeRollsUnlessDropTenEarlierD =
+                new ConstraintAndDesription("upToThreeRollsUnlessDropTenEarlier",upToThreeRollsUnlessDropTenEarlier);
+
+            martianBowling.AddConstraintAndDescription(upToThreeRollsUnlessDropTenEarlierD);
+            martianBowling.AddConstraintAndDescription(upToThreeRollsUnlessDropTenEarlierD);
+            martianBowling.AddConstraintAndDescription(upToThreeRollsUnlessDropTenEarlierD);
 
             martianBowling.AddRulesForFrame(new List<RuleForFrame> { new MartianFrameBonus() });
             martianBowling.AddRulesForFrame(new List<RuleForFrame> { new MartianFrameBonus() });
@@ -57,13 +60,24 @@ namespace ocpBowling
                  (sumOfAllRollMustbeLessThanTen(x) &&
                   (frameWithStrikeHasOnlyOneRoll(x) || frameWithNoStrikeHasTwoRolls(x))));
 
-            for (int i = 0; i < 9; i++)
-                terrestrialBowling.AddConstraint(plainFrameConstraint);
+            ConstraintAndDesription plainFrameConstraintD = new ConstraintAndDesription("sumOfAllRollMustbeLessThanTen && (frameWithStrikeHasOnlyOneRoll || frameWithNoStrikeHasTwoRolls)", plainFrameConstraint);
 
+            for (int i = 0; i < 9; i++)
+            {
+               terrestrialBowling.AddConstraintAndDescription(plainFrameConstraintD);
+            }
             Constraint sumRollsNoHigherThanThirty = x => x.Rolls.Sum() <= 30;
             Constraint ifFirstRollIsTenThanThereIsAtLeastAnotherRoll = x => x.Rolls[0]<10||x.Rolls.Count > 1;
-            
-            terrestrialBowling.AddConstraint(x => sumRollsNoHigherThanThirty(x) && ifFirstRollIsTenThanThereIsAtLeastAnotherRoll(x));
+
+            Constraint noHigherThanThirtyAndAllowMoreRollsIfNoStrike =
+                x => (sumRollsNoHigherThanThirty(x) && ifFirstRollIsTenThanThereIsAtLeastAnotherRoll(x));
+
+            ConstraintAndDesription noHigherThanThirtyAndAllowMoreRollsIfNoStrikeD = new ConstraintAndDesription("noHigherThanThirtyAndAllowMoreRollsIfNoStrike", noHigherThanThirtyAndAllowMoreRollsIfNoStrike);
+
+            terrestrialBowling.AddConstraintAndDescription(noHigherThanThirtyAndAllowMoreRollsIfNoStrikeD);
+
+        
+        
         }
     }
 }
