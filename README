@@ -1,33 +1,35 @@
 OCP KATA BOWLING
 
-This programming excercise is an implementation of the bowling kata with "ocp rules" as suggested by Matteo Vaccari in his blog:
+An implementation of the bowling kata with "ocp rules" as suggested by Matteo Vaccari in his blog:
 
 http://matteo.vaccari.name/blog/archives/293 
 
 
-This is the original bowling kata description by Robert Martin: http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata
+The original bowling kata description by Robert Martin is here: http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata
 
 
 Ocp kata:
 The ocp kata tecnique forces the respect of the open closed principle. 
-Any new feature must be implemented by extensions and no modifications of any module but the factory. 
-If that is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting base code closed to modification for the implementation of the next feature.
-After this refactoring it the test must be de-ignored add the code that let the tesst pass can be added (respecting ocp by definition).
+Any new feature must be implemented by extensions and no modifications of any existing module but the factory. 
+If it is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting base code closed to modification for the implementation of this new feature.
+After this refactoring  the test must be de-ignored add the code that makes the test pass can be added (respecting ocp by definition).
 
 
 notes:
 
-here there is an "oracle" to compute the bowling score:
+may be there is the need to check a "legacy" source of bowling score calculation. Here there is one:
 http://tralvex.com/pub/bowling/BSC.htm
 
 The code has been tested in dot.net framework 3.5
 
-Seems to that the solution is closed to modifications for any new bowling game instance if:
-- the frame cration constraing can be expressed in term of boolean expression applied on the current frame
-- the bonus for any frame that can be expressed by a function that returns an integer applied on the entire frames sequence and the current frame index.
+Seems to me that the solution is already closed to modifications for any new bowling game instance if:
+- the frame cration constraint can be expressed in terms of boolean expression applied to the frame
+- the bonus for any frame can be expressed by a function that returns an integer applied on the entire frames sequence and the current frame index.
 
-The "martian bowling" game are an example of this.
+The "martian bowling" game rules are an example of this because there is a different rule to compute the bonus and to validate the frame.
 
-The fact that the total score is the the sum of all the pins dropped plus the sum of all the bonus is an invariant, and so the solution is still not closed to any different bowling instances that do not follow this constant rule.
+For any new implementation the total score will still the the sum of all the pins dropped plus the sum of all the bonuses. 
+
+So the solution is not closed to any implementation that needs to change this behavior as well.
 
 
