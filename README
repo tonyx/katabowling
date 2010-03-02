@@ -11,7 +11,7 @@ This is the original bowling kata description by Robert Martin: http://butuncleb
 Ocp kata:
 The ocp kata tecnique forces the respect of the open closed principle. 
 Any new feature must be implemented by extensions and no modifications of any module but the factory. 
-If that is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting base close to modification for the implementation of the next feature.
+If that is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting base code closed to modification for the implementation of the next feature.
 After this refactoring it the test must be de-ignored add the code that let the tesst pass can be added (respecting ocp by definition).
 
 
@@ -22,9 +22,12 @@ http://tralvex.com/pub/bowling/BSC.htm
 
 The code has been tested in dot.net framework 3.5
 
-Seems to that the solution is closed to modifications for any new bowling game instance that varies respecto of the terrestrial bowling if:
+Seems to that the solution is closed to modifications for any new bowling game instance if:
 - the frame cration constraing can be expressed in term of boolean expression applied on the current frame
 - the bonus for any frame that can be expressed by a function that returns an integer applied on the entire frames sequence and the current frame index.
 
 The "martian bowling" game are an example of this.
+
+The fact that the total score is the the sum of all the pins dropped plus the sum of all the bonus is an invariant, and so the solution is still not closed to any different bowling instances that do not follow this constant rule.
+
 
