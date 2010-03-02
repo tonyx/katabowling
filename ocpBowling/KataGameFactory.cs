@@ -9,7 +9,7 @@ namespace ocpBowling
         public static Bowling getTerrestrialBowling()
         {
             Bowling terrestrialBowling = new FlexibleBowling();
-            SetConstraintsForFirstNineFrames(terrestrialBowling);
+            SetTerrestrialBowlingConstraints(terrestrialBowling);
             SetTerrestrianBonusRules(terrestrialBowling);
             terrestrialBowling.Init();
             return terrestrialBowling;
@@ -50,7 +50,7 @@ namespace ocpBowling
         }
 
 
-        private static void SetConstraintsForFirstNineFrames(Bowling terrestrialBowling)
+        private static void SetTerrestrialBowlingConstraints(Bowling terrestrialBowling)
         {
             Constraint sumOfAllRollMustbeLessThanTen = (x => x.Rolls.Sum() <= 10);
             Constraint frameWithStrikeHasOnlyOneRoll = (x => (x.Rolls[0] == 10 && x.Rolls.Count == 1));
@@ -76,8 +76,7 @@ namespace ocpBowling
 
             terrestrialBowling.AddConstraintAndDescription(noHigherThanThirtyAndAllowMoreRollsIfNoStrikeD);
 
-        
-        
+               
         }
     }
 }
