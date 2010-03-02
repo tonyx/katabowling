@@ -3,9 +3,10 @@ OCP KATA BOWLING
 
 references: 
 
-riginal bowling kata description: http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata
+Original bowling kata description: http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata
 
-The ocp kata tecnique forces an open closed implementation. Any new feature should be implementable with extension and no modification. If that is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting design able to implement the new feature by extensions and no modifications, after the refactoring then you de-ignore the test and should be able to make the test pass only adding new classes or modifying the factory.
+The ocp kata tecnique forces an implementation that will respect the open closed principle. The rule is that any new feature must be implemented with extension and no modification. If that is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting base code ready to let implementation of the new feature with extensions and no modifications. 
+So then the test can be de-ignored, and you should be able to make it pass just modifing the factory and-or adding new classes.
 
 See http://matteo.vaccari.name/blog/archives/293 
 
