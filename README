@@ -1,20 +1,30 @@
-
 OCP KATA BOWLING
 
-references: 
+This programming excercise is an implementation of the bowling kata with "ocp rules" as suggested by Matteo Vaccari in his blog:
 
-Original bowling kata description: http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata
+http://matteo.vaccari.name/blog/archives/293 
 
-The ocp kata tecnique forces an implementation that will respect the open closed principle. The rule is that any new feature must be implemented with extension and no modification. If that is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting base code ready to let implementation of the new feature with extensions and no modifications. 
-So then the test can be de-ignored, and you should be able to make it pass just modifing the factory and-or adding new classes.
 
-See http://matteo.vaccari.name/blog/archives/293 
+This is the original bowling kata description by Robert Martin: http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata
 
-If you need an "oracle" to compute the bowling score, here it is:
+
+Ocp kata:
+The ocp kata tecnique forces the respect of the open closed principle. 
+Any new feature must be implemented by extensions and no modifications of any module but the factory. 
+If that is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting base code able to respect the ocp rule.
+After this refactoring it the test must be de-ignored add the code that let the tesst pass can be added.
+
+
+notes:
+
+here there is an "oracle" to compute the bowling score:
 http://tralvex.com/pub/bowling/BSC.htm
 
 The code has been tested in dot.net framework 3.5
 
-The flexible part of the bowling game instance is the constraints about the frame creation, and the way to compute the bonus.
+Seems to that the solution is closed to modifications for any new bowling game instance that varies respecto of the terrestrial bowling if:
+- the frame cration constraing can be expressed in term of boolean expression applied on the current frame
+- the bonus for any frame that can be expressed by a function that returns an integer applied on the entire frames sequence and the current frame index.
 
+The "martian bowling" game are an example of this.
 
