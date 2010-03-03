@@ -10,7 +10,7 @@ namespace ocpBowling
         [SetUp]
         public void Init()
         {
-            terrestrialGame = KataGameFactory.getTerrestrialBowling();                 
+            terrestrialGame = BowlingFactory.CreateTerrestrialBowling();                 
         }
 
 
@@ -239,7 +239,7 @@ namespace ocpBowling
         [Test]
         public void TestAllStrickeButLastTen()
         {
-            Bowling game = KataGameFactory.getTerrestrialBowling();
+            Bowling game = BowlingFactory.CreateTerrestrialBowling();
             Frame frame = new Frame(10);
             for (int i = 0; i < 9; i++)
             {

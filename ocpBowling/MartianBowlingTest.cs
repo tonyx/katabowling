@@ -14,7 +14,7 @@ namespace bowlingkata
         [SetUp]
         public void Init()
         {
-            martianGame = KataGameFactory.getMartianBowling();
+            martianGame = BowlingFactory.CreateMartianBowling();
         }
 
         [Test]
@@ -67,5 +67,6 @@ namespace bowlingkata
             martianGame.AddFrame(lastFrame);
             Assert.AreEqual(10 + 3 + 4 + 4, martianGame.Score());
         }
+
     }
 }
