@@ -275,7 +275,7 @@ namespace ocpBowling
         }
 
         [Test]
-        [ExpectedException(ExpectedMessage = "10 0",MatchType=MessageMatch.Contains)]
+        [ExpectedException(ExpectedMessage = "violated constraint [sumOfAllRollMustbeLessThanTen && (frameWithStrikeHasOnlyOneRoll || frameWithNoStrikeHasTwoRolls)|ocpBowling.Constraint ] in frame 10 0", MatchType = MessageMatch.Contains)]
         public void TestThereIsNoSecondRollInAStrike()
         {
             Frame frame = new Frame(10,0);
@@ -289,6 +289,10 @@ namespace ocpBowling
             Frame frame = new Frame(9);
             terrestrialGame.AddFrame(frame);
         }
+
+
+
+
         
     }
 }
