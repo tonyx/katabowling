@@ -23,7 +23,7 @@ namespace ocpBowling
                 x => ((x.Rolls.Count == 3 && x.Rolls.Sum() <= 10) || (x.Rolls.Count < 3 && x.Rolls.Sum() == 10));
             
             ConstraintAndDesription upToThreeRollsUnlessDropTenEarlierD =
-                new ConstraintAndDesription("upToThreeRollsUnlessDropTenEarlier",upToThreeRollsUnlessDropTenEarlier);
+                new ConstraintAndDesription("up to three rolls unless drop ten earlier",upToThreeRollsUnlessDropTenEarlier);
 
             martianBowling.AddConstraintAndDescription(upToThreeRollsUnlessDropTenEarlierD);
             martianBowling.AddConstraintAndDescription(upToThreeRollsUnlessDropTenEarlierD);

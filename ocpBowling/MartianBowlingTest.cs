@@ -33,7 +33,7 @@ namespace bowlingkata
 
 
         [Test]
-        [ExpectedException]
+        [ExpectedException(ExpectedMessage = "up to three rolls unless drop ten earlier|ocpBowling.Constraint ] in frame 1 1",MatchType = MessageMatch.Contains)]     
         public void shouldNotAllowLessThanThreeRoll()
         {
             Frame frame = new Frame(1, 1);

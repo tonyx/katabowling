@@ -10,7 +10,7 @@ namespace ocpBowling
                 return frames[frames.Length - 1].Rolls.Sum();
             return 0;
         }
-        public bool Strike(Frame frame)
+        private bool Strike(Frame frame)
         {
             return frame.Rolls[0] == 10;
         }

@@ -289,10 +289,6 @@ namespace ocpBowling
             Frame frame = new Frame(9);
             terrestrialGame.AddFrame(frame);
         }
-
-
-
-
         
     }
 }
