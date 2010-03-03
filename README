@@ -30,6 +30,6 @@ The "martian bowling" game rules are an example of this because there is a diffe
 
 For any new implementation the total score will still the the sum of all the pins dropped plus the sum of all the bonuses. 
 
-So the solution is not closed to any implementation that needs to change this behavior as well.
+So the solution is not closed to any extension that dees not follow this behavior.
 
 
