@@ -5,7 +5,6 @@ namespace ocpBowling
     {
         public int Bonus(Frame[] frames, int i)
         {
-
             if (i < frames.Length - 2)
             {
                 if (Strike(frames[i]))
@@ -38,7 +37,6 @@ namespace ocpBowling
                 if (Strike(frames[i]))
                     return true;
             return false;
-
         }
 
         private bool Strike(Frame frame)

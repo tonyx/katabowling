@@ -5,18 +5,11 @@ namespace ocpBowling
 {
     public class FlexibleBowling : Bowling
     {
+
+        private Dictionary<int, List<RuleForFrame>> indexRuleForFrame = new Dictionary<int, List<RuleForFrame>>();
+        private Dictionary<int, ConstraintAndDesription> indexConstraintForFrame = new Dictionary<int, ConstraintAndDesription>();
         private List<Frame> frames = new List<Frame>();
-        private List<List<RuleForFrame>> rulesForFrame = new List<List<RuleForFrame>>();
         private List<ConstraintAndDesription> constraintAndDescriptionList = new List<ConstraintAndDesription>();
-
-        private List<ConstraintAndDesription>.Enumerator _constraintsAndDescriptionEnumerator;
-        private List<List<RuleForFrame>>.Enumerator rulesForFrameEnumerator;
-
-        public void Init()
-        {
-            rulesForFrameEnumerator = rulesForFrame.GetEnumerator();
-            _constraintsAndDescriptionEnumerator = constraintAndDescriptionList.GetEnumerator();
-        }
 
         public int Score()
         {
@@ -35,9 +28,11 @@ namespace ocpBowling
         private int ComputeBonus(Frame[] frames, int i)
         {
             int toReturn = 0;
-            if (rulesForFrameEnumerator.MoveNext())
+            List<RuleForFrame> ruleForFrames;
+
+            if (indexRuleForFrame.TryGetValue(i, out ruleForFrames))
             {
-                foreach (RuleForFrame rule in rulesForFrameEnumerator.Current)
+                foreach (RuleForFrame rule in ruleForFrames)
                 {
                     toReturn += rule.Bonus(frames, i);
                     if (rule.ConditionToBreak(frames, i))
@@ -51,36 +46,40 @@ namespace ocpBowling
         }
 
 
+        public void SetConstraintForFrame(ConstraintAndDesription constraint, int frameIndex)
+        {
+            indexConstraintForFrame.Add(frameIndex,constraint);
+        }
+
         public void AddConstraintAndDescription(ConstraintAndDesription constraintAndDescription)
         {
             constraintAndDescriptionList.Add(constraintAndDescription);
         }
 
 
-        public void AddRulesForFrame(List<RuleForFrame> rules)
+        public void SetRulesForFrame(List<RuleForFrame> rules, int frameIndex)
         {
-            rulesForFrame.Add(rules);   
+            indexRuleForFrame.Add(frameIndex,rules);
         }
-
-
-        private void CheckConstraint(Frame frame)
+       
+        private void CheckConstraint(Frame frame, int index)
         {
-            if (_constraintsAndDescriptionEnumerator.MoveNext())
+            ConstraintAndDesription constrintAndDescription;
+            if (indexConstraintForFrame.TryGetValue(index,out constrintAndDescription))
             {
-                bool matches = _constraintsAndDescriptionEnumerator.Current.TheConstraint.Invoke(frame);
+                bool matches = constrintAndDescription.TheConstraint.Invoke(frame);
                 if (!matches)
                 {
-                    throw new Exception("violated constraint "+_constraintsAndDescriptionEnumerator.Current +" in frame "+frame.ToString());
-                }
+                    throw new Exception("violated constraint " + constrintAndDescription + " in frame " + frame.ToString());                    
+                }                
             }
             else
-                throw new Exception("rule error: the constraint rules are mandatories");
+                throw new Exception("rule error: the constraint rules are mandatories");            
         }
-
 
         public void AddFrame(Frame frame)
         {
-            CheckConstraint(frame);
+            CheckConstraint(frame,frames.Count);
             frames.Add(frame);
         }
     }
