@@ -60,7 +60,7 @@ namespace ocpBowling
                  (sumOfAllRollMustbeLessThanTen(x) &&
                   (frameWithStrikeHasOnlyOneRoll(x) || frameWithNoStrikeHasTwoRolls(x))));
 
-            ConstraintAndDesription plainFrameConstraintD = new ConstraintAndDesription("sumOfAllRollMustbeLessThanTen && (frameWithStrikeHasOnlyOneRoll || frameWithNoStrikeHasTwoRolls)", plainFrameConstraint);
+            ConstraintAndDesription plainFrameConstraintD = new ConstraintAndDesription("sum of all roll must be less or equals to ten AND (frame with strike has only one roll OR frame with no strike has two rolls)", plainFrameConstraint);
 
             for (int i = 0; i < 9; i++)
             {

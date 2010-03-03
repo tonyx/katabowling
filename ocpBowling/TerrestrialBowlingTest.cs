@@ -275,7 +275,7 @@ namespace ocpBowling
         }
 
         [Test]
-        [ExpectedException(ExpectedMessage = "violated constraint [sumOfAllRollMustbeLessThanTen && (frameWithStrikeHasOnlyOneRoll || frameWithNoStrikeHasTwoRolls)|ocpBowling.Constraint ] in frame 10 0", MatchType = MessageMatch.Contains)]
+        [ExpectedException(ExpectedMessage = "[sum of all roll must be less or equals to ten AND (frame with strike has only one roll OR frame with no strike has two rolls)|ocpBowling.Constraint ] in frame 10 0",MatchType = MessageMatch.Contains)]
         public void TestThereIsNoSecondRollInAStrike()
         {
             Frame frame = new Frame(10,0);
