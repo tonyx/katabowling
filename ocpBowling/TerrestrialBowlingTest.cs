@@ -283,7 +283,7 @@ namespace ocpBowling
         }
 
         [Test]
-        [ExpectedException]
+        [ExpectedException(ExpectedMessage = "violated constraint [sum of all roll must be less or equals to ten", MatchType = MessageMatch.Contains)]
         public void TestThereShouldbeASecondRollIfNotStrike()
         {
             Frame frame = new Frame(9);

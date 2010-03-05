@@ -13,9 +13,8 @@ namespace ocpBowling
 
         private bool Matches(Frame[] frames, int i)
         {
-            if (i != frames.Length - 1)
-                if (spare(frames[i]))
-                    return true;
+            if (spare(frames[i]))
+                return true;
             return false;
         }
 
