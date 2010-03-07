@@ -5,11 +5,26 @@ namespace ocpBowling
 {
     public class FlexibleBowling : Bowling
     {
-
+        private List<int> rolls = new List<int>();
+        private List<int> rollsNotInFrame = new List<int>();
         private Dictionary<int, List<RuleForFrame>> indexRuleForFrame = new Dictionary<int, List<RuleForFrame>>();
         private Dictionary<int, ConstraintAndDesription> indexConstraintForFrame = new Dictionary<int, ConstraintAndDesription>();
         private List<Frame> frames = new List<Frame>();
         private List<ConstraintAndDesription> constraintAndDescriptionList = new List<ConstraintAndDesription>();
+
+
+        public void Roll(int roll)
+        {
+            rollsNotInFrame.Add(roll);
+            Frame newFrame = new Frame(rollsNotInFrame);
+            try
+            {
+                this.AddFrame(newFrame);
+                rollsNotInFrame=new List<int>();
+            } catch (FormatException e)
+            {                
+            }
+        }
 
         public int Score()
         {
@@ -70,17 +85,22 @@ namespace ocpBowling
                 bool matches = constrintAndDescription.TheConstraint.Invoke(frame);
                 if (!matches)
                 {
-                    throw new Exception("violated constraint " + constrintAndDescription + " in frame " + frame.ToString());                    
+                    throw new FormatException("violated constraint " + constrintAndDescription + " in frame " + frame.ToString());                    
                 }                
             }
             else
-                throw new Exception("rule error: the constraint rules are mandatories");            
+                throw new FormatException("rule error: there is no constraint for frame index "+index);            
         }
 
         public void AddFrame(Frame frame)
         {
             CheckConstraint(frame,frames.Count);
             frames.Add(frame);
+        }
+
+        public List<Frame> Frames()
+        {
+            return this.frames;
         }
     }
 }

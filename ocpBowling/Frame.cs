@@ -9,6 +9,11 @@ namespace ocpBowling
     {
         readonly List<int> rollsInFrame;
 
+        public Frame(List<int> rolls)
+        {
+            rollsInFrame = rolls;   
+        }
+
         public Frame(params int[] args)
         {
             rollsInFrame = args.ToList();

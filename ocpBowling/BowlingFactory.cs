@@ -75,8 +75,11 @@ namespace ocpBowling
             Constraint sumRollsNoHigherThanThirty = x => x.Rolls.Sum() <= 30;
             Constraint ifFirstRollIsTenThanThereIsAtLeastAnotherRoll = x => x.Rolls[0]<10||x.Rolls.Count > 1;
 
+            Constraint ifSecondRollIsTenThenThereIsAnotherRoll =
+                x => (!(x.Rolls.Count > 1 && x.Rolls[1] == 10) || x.Rolls.Count == 3);
+
             Constraint noHigherThanThirtyAndAllowMoreRollsIfNoStrike =
-                x => (sumRollsNoHigherThanThirty(x) && ifFirstRollIsTenThanThereIsAtLeastAnotherRoll(x));
+                x => (sumRollsNoHigherThanThirty(x) && ifFirstRollIsTenThanThereIsAtLeastAnotherRoll(x)&& ifSecondRollIsTenThenThereIsAnotherRoll(x));
 
             ConstraintAndDesription noHigherThanThirtyAndAllowMoreRollsIfNoStrikeD = new ConstraintAndDesription("noHigherThanThirtyAndAllowMoreRollsIfNoStrike", noHigherThanThirtyAndAllowMoreRollsIfNoStrike);
 

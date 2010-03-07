@@ -25,6 +25,16 @@ namespace ocpBowling
             Assert.AreEqual(0, terrestrialGame.Score());
         }
 
+        [Test]
+        public void TestAllZeroesByRolling()
+        {
+            for (int i=0;i<20;i++)
+            {
+                terrestrialGame.Roll(0);
+                
+            }
+            Assert.AreEqual(0,terrestrialGame.Score());
+        }
 
 
         [Test]
@@ -39,14 +49,24 @@ namespace ocpBowling
             terrestrialGame.AddFrame(Frame);
             Assert.AreEqual(19, terrestrialGame.Score());
         }
+        [Test]
+        public void TestPlaingGameNoSpareOrStrikesByRolling()
+        {
+            for (int i = 0; i < 18;i++ )
+            {
+                terrestrialGame.Roll(1);
+            }
+            terrestrialGame.Roll(1);
+            Assert.AreEqual(19,terrestrialGame.Score());
+
+        }
+
 
         [Test]
         public void TestFirstIsSpare()
         {
-            Frame firstFrame = new Frame(1,9);
- 
-            Frame secondFrame = new Frame(1,0);
-            
+            Frame firstFrame = new Frame(1,9); 
+            Frame secondFrame = new Frame(1,0);            
             terrestrialGame.AddFrame(firstFrame);
             terrestrialGame.AddFrame(secondFrame);
             Frame emptyFrame = new Frame(0,0);
@@ -56,31 +76,55 @@ namespace ocpBowling
             }
             Frame Frame = new Frame(0);
             terrestrialGame.AddFrame(Frame);
-
             Assert.AreEqual(12, terrestrialGame.Score());
         }
+        [Test]
+        public void TestFirstIsSpareByRolling()
+        {
+            terrestrialGame.Roll(1);
+            terrestrialGame.Roll(9);
+            terrestrialGame.Roll(1);
+            terrestrialGame.Roll(0);
+
+            for (int i=4;i<18;i++)
+            {
+                terrestrialGame.Roll(0);
+            }
+            terrestrialGame.Roll(0);
+            Assert.AreEqual(12,terrestrialGame.Score());
+        }
+
 
         [Test]
         public void TestFirstIsStricke()
         {
             Frame firstFrame = new Frame(10);
-
             Frame secondFrame = new Frame(1,1);
-
             terrestrialGame.AddFrame(firstFrame);
             terrestrialGame.AddFrame(secondFrame);
             Frame emptyFrame = new Frame(0,0);
-
             for (int i = 2; i < 9;i++ )
             {
                 terrestrialGame.AddFrame(emptyFrame);
             }
             Frame Frame = new Frame(0);
             terrestrialGame.AddFrame(Frame);
-
             Assert.AreEqual(14, terrestrialGame.Score());
         }
 
+        [Test]
+        public void TestFirstIsStrickeByRolling()
+        {
+            terrestrialGame.Roll(10);
+            terrestrialGame.Roll(1);
+            terrestrialGame.Roll(1);
+            for (int i=4;i<18;i++)
+            {
+                terrestrialGame.Roll(0);
+            }
+            terrestrialGame.Roll(0);
+            Assert.AreEqual(14,terrestrialGame.Score());
+        }
 
         [Test]
         public void TestLastRollGetAnotherRollIfThereIsAstrike()
@@ -94,6 +138,19 @@ namespace ocpBowling
             terrestrialGame.AddFrame(Frame);
             Assert.AreEqual(11, terrestrialGame.Score());
         }
+        [Test]
+        public void TestLastRollGetAnotherRollIfThereIsAstrikeByRolling()
+        {
+            for (int i=0;i<18;i++)
+            {
+                terrestrialGame.Roll(0);
+            }
+            terrestrialGame.Roll(10);
+            terrestrialGame.Roll(1);
+            Assert.AreEqual(11, terrestrialGame.Score());
+        }
+
+
 
 
         [Test]
@@ -106,10 +163,19 @@ namespace ocpBowling
             }
             Frame lastStrike = new Frame(0);
             terrestrialGame.AddFrame(lastStrike);
-
-            Assert.AreEqual(240, terrestrialGame.Score());
-            
+            Assert.AreEqual(240, terrestrialGame.Score());            
         }
+        [Test]
+        public void TestLastRollWithNoStrikeByRolling()
+        {
+            for (int i=0;i<9;i++)
+            {
+                terrestrialGame.Roll(10);
+            }
+            terrestrialGame.Roll(0);
+            Assert.AreEqual(240, terrestrialGame.Score());
+        }
+
 
         [Test]
         public void TestAllStrickeandLastRollIsTen()
@@ -121,9 +187,17 @@ namespace ocpBowling
             }
             Frame lastStrike = new Frame(10,0);
             terrestrialGame.AddFrame(lastStrike);
-
             Assert.AreEqual(270, terrestrialGame.Score());
-
+        }
+        [Test]
+        public void TestAllStrickeandLastRollIsTenByRolling()
+        {
+            for (int i=0;i<10;i++)
+            {
+                terrestrialGame.Roll(10);
+            }
+            terrestrialGame.Roll(0);
+            Assert.AreEqual(270, terrestrialGame.Score());
         }
 
 
@@ -135,15 +209,23 @@ namespace ocpBowling
             {
                 terrestrialGame.AddFrame(strike);
             }
-
             Frame lastStrike = new Frame(10,10,1);
             terrestrialGame.AddFrame(lastStrike);
-            Assert.AreEqual(291, terrestrialGame.Score());
-            
+            Assert.AreEqual(291, terrestrialGame.Score());            
         }
 
-
-
+        [Test]
+        public void testStrikeAllByRolling()
+        {
+            for (int i=0;i<9;i++)
+            {
+                terrestrialGame.Roll(10);
+            }
+            terrestrialGame.Roll(10);
+            terrestrialGame.Roll(10);
+            terrestrialGame.Roll(1);            
+            Assert.AreEqual(291, terrestrialGame.Score());
+        }
         [Test]
         public void testPerfectStrike()
         {
@@ -154,10 +236,18 @@ namespace ocpBowling
             }
             Frame lastStrike = new Frame(10,10,10);
             terrestrialGame.AddFrame(lastStrike);
-
             Assert.AreEqual(300, terrestrialGame.Score());
-
         }
+        [Test]
+        public void testPerfectStrikeByRolling()
+        {
+            for (int i=0;i<12;i++)
+            {
+                terrestrialGame.Roll(10);
+            }
+            Assert.AreEqual(300, terrestrialGame.Score());
+        }
+
 
         [Test]
         public void tenthIsStrikeWhileFollowingNot()
@@ -170,8 +260,20 @@ namespace ocpBowling
             Frame Frame = new Frame(10,1);
             terrestrialGame.AddFrame(Frame);
             Assert.AreEqual(11, terrestrialGame.Score());
-
         }
+        [Test]
+        public void tenthIsStrikeWhileFollowingNotByRolling()
+        {
+            for (int i=0;i<18;i++)
+            {
+                terrestrialGame.Roll(0);
+            }
+            terrestrialGame.Roll(10);
+            terrestrialGame.Roll(1);
+            
+            Assert.AreEqual(11, terrestrialGame.Score());
+        }
+
 
         [Test]
         public void tenthIsStrikeAndTheFollowingAlso()
@@ -181,10 +283,20 @@ namespace ocpBowling
             {
                 terrestrialGame.AddFrame(noPoints);
             }
-
             Frame Frame = new Frame(10,10,1);
-
             terrestrialGame.AddFrame(Frame);
+            Assert.AreEqual(21, terrestrialGame.Score());
+        }
+        [Test]
+        public void tenthIsStrikeAndTheFollowingAlsoByRolling()
+        {
+            for (int i=0;i<18;i++)
+            {
+                terrestrialGame.Roll(0);
+            }
+            terrestrialGame.Roll(10);
+            terrestrialGame.Roll(10);
+            terrestrialGame.Roll(1);                        
             Assert.AreEqual(21, terrestrialGame.Score());
         }
 
@@ -204,6 +316,19 @@ namespace ocpBowling
             terrestrialGame.AddFrame(Frame);
             Assert.AreEqual(60, terrestrialGame.Score());
         }
+        [Test]
+        public void TestFirstThreeAreStrikesByRolling()
+        {
+            terrestrialGame.Roll(10);
+            terrestrialGame.Roll(10);
+            terrestrialGame.Roll(10);
+            for(int i=6;i<19;i++)
+            {
+                terrestrialGame.Roll(0);
+            }                        
+            Assert.AreEqual(60, terrestrialGame.Score());
+        }
+
 
         [Test]
         public void TestFirstTwoAreStrikes()
@@ -218,6 +343,18 @@ namespace ocpBowling
             }
             Frame Frame = new Frame(0);
             terrestrialGame.AddFrame(Frame);
+
+            Assert.AreEqual(30, terrestrialGame.Score());
+        }
+        [Test]
+        public void TestFirstTwoAreStrikesByRolling()
+        {
+            terrestrialGame.Roll(10);
+            terrestrialGame.Roll(10);
+            for (int i=4;i<18;i++)
+            {
+                terrestrialGame.Roll(0);
+            }
 
             Assert.AreEqual(30, terrestrialGame.Score());
         }
@@ -288,6 +425,24 @@ namespace ocpBowling
         {
             Frame frame = new Frame(9);
             terrestrialGame.AddFrame(frame);
+        }
+
+        [Test]
+        [Ignore]
+        public void RollsInFrame()
+        {
+            terrestrialGame.Roll(10);
+            terrestrialGame.Roll(10);
+            Assert.AreEqual(2,terrestrialGame.Frames().Count);
+        }
+
+        [Test]
+        [Ignore]
+        public void Rolls()
+        {
+            terrestrialGame.Roll(1);
+            terrestrialGame.Roll(2);
+            Assert.AreEqual(1,terrestrialGame.Frames().Count);
         }
         
     }

@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NBehave.Narrator.Framework;
 using NUnit.Framework;
 using ocpBowling;
+using NBehave.Spec.NUnit;
 
 namespace bowlingkata
 {
@@ -33,7 +35,7 @@ namespace bowlingkata
 
 
         [Test]
-        [ExpectedException(ExpectedMessage = "up to three rolls unless drop ten earlier|ocpBowling.Constraint ] in frame 1 1",MatchType = MessageMatch.Contains)]     
+        [ExpectedException(ExpectedMessage = "up to three rolls unless drop ten earlier|ocpBowling.Constraint ] in frame 1 1",MatchType = MessageMatch.Contains)]
         public void shouldNotAllowLessThanThreeRoll()
         {
             Frame frame = new Frame(1, 1);
@@ -68,5 +70,23 @@ namespace bowlingkata
             Assert.AreEqual(10 + 3 + 4 + 4, martianGame.Score());
         }
 
+        [Test]
+        [ExpectedException]
+        public void ShouldNotAcceptMoreFrameIfGameIsOver()
+        {
+            Frame frame = new Frame(10);
+            Frame secondFrame = new Frame(1, 1, 1);
+            Frame lastFrame = new Frame(2, 1, 1);
+            Frame oneMoreFrame = new Frame(10);
+            martianGame.AddFrame(frame);
+            martianGame.AddFrame(secondFrame);
+            martianGame.AddFrame(lastFrame);
+            martianGame.AddFrame(oneMoreFrame);
+            //            Assert.AreEqual(10 + 3 + 4 + 4, martianGame.Score());
+
+
+        }
+
     }
+
 }
