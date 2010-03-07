@@ -59,12 +59,14 @@ namespace ocpBowling
         private static void SetTerrestrialBowlingConstraints(Bowling terrestrialBowling)
         {
             Constraint sumOfAllRollMustbeLessThanTen = (x => x.Rolls.Sum() <= 10);
-            Constraint frameWithStrikeHasOnlyOneRoll = (x => (x.Rolls[0] == 10 && x.Rolls.Count == 1));
-            Constraint frameWithNoStrikeHasTwoRolls = (x => (x.Rolls[0] < 10 && x.Rolls.Count == 2));
+            Constraint ifFirstRollIsTenThanTheFrameIsOver = (x => (!(x.Rolls[0] == 10) || x.Rolls.Count == 1));
+            Constraint ifFirstRollIsLessThanTenThenThereIsAnotherRollInTheFrame = (x => (!(x.Rolls[0] < 10) || x.Rolls.Count == 2));
+
             Constraint plainFrameConstraint =
-                (x =>
-                 (sumOfAllRollMustbeLessThanTen(x) &&
-                  (frameWithStrikeHasOnlyOneRoll(x) || frameWithNoStrikeHasTwoRolls(x))));
+                            (x =>
+                             (sumOfAllRollMustbeLessThanTen(x) &&
+                              (ifFirstRollIsTenThanTheFrameIsOver(x) && 
+                              ifFirstRollIsLessThanTenThenThereIsAnotherRollInTheFrame(x))));
 
             ConstraintAndDesription plainFrameConstraintD = new ConstraintAndDesription("sum of all roll must be less or equals to ten AND (frame with strike has only one roll OR frame with no strike has two rolls)", plainFrameConstraint);
 
@@ -73,13 +75,15 @@ namespace ocpBowling
                 terrestrialBowling.SetConstraintForFrame(plainFrameConstraintD,i);
             }
             Constraint sumRollsNoHigherThanThirty = x => x.Rolls.Sum() <= 30;
-            Constraint ifFirstRollIsTenThanThereIsAtLeastAnotherRoll = x => x.Rolls[0]<10||x.Rolls.Count > 1;
+            Constraint ifFirstRollIsTenThanThereIsAtLeastAnotherRoll = x => !(x.Rolls[0]==10)||x.Rolls.Count > 1;
 
             Constraint ifSecondRollIsTenThenThereIsAnotherRoll =
                 x => (!(x.Rolls.Count > 1 && x.Rolls[1] == 10) || x.Rolls.Count == 3);
 
             Constraint noHigherThanThirtyAndAllowMoreRollsIfNoStrike =
-                x => (sumRollsNoHigherThanThirty(x) && ifFirstRollIsTenThanThereIsAtLeastAnotherRoll(x)&& ifSecondRollIsTenThenThereIsAnotherRoll(x));
+                x => (sumRollsNoHigherThanThirty(x) && 
+                    ifFirstRollIsTenThanThereIsAtLeastAnotherRoll(x)&& 
+                    ifSecondRollIsTenThenThereIsAnotherRoll(x));
 
             ConstraintAndDesription noHigherThanThirtyAndAllowMoreRollsIfNoStrikeD = new ConstraintAndDesription("noHigherThanThirtyAndAllowMoreRollsIfNoStrike", noHigherThanThirtyAndAllowMoreRollsIfNoStrike);
 
