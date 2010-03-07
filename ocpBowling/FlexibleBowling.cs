@@ -77,6 +77,8 @@ namespace ocpBowling
             indexRuleForFrame.Add(frameIndex,rules);
         }
        
+
+        /// <exception cref="FormatException"></exception>
         private void CheckConstraint(Frame frame, int index)
         {
             ConstraintAndDesription constrintAndDescription;
