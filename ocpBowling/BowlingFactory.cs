@@ -8,7 +8,7 @@ namespace ocpBowling
     {
         public static Bowling CreateTerrestrialBowling()
         {
-            Bowling terrestrialBowling = new FlexibleBowling();
+            Bowling terrestrialBowling = new Bowling();
             SetTerrestrialBowlingConstraints(terrestrialBowling);
             SetTerrestrianBonusRules(terrestrialBowling);
             return terrestrialBowling;
@@ -16,7 +16,7 @@ namespace ocpBowling
 
         public static Bowling CreateMartianBowling()
         {
-            Bowling martianBowling = new FlexibleBowling();
+            Bowling martianBowling = new Bowling();
             SetMartianBowlingFrameConstraints(martianBowling);
             SetMartianBowlingRules(martianBowling);
             return martianBowling;
@@ -31,6 +31,8 @@ namespace ocpBowling
 
         private static void SetMartianBowlingFrameConstraints(Bowling martianBowling)
         {
+
+
             Constraint upToThreeRollsUnlessDropTenEarlier =
                 x => ((x.Rolls.Count == 3 && x.Rolls.Sum() <= 10) || (x.Rolls.Count < 3 && x.Rolls.Sum() == 10));
             

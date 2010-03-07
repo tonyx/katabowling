@@ -43,11 +43,18 @@ namespace bowlingkata
         }
 
         [Test]
-        public void ShouldAllowSingleSlotIfthereIsStrike()
+        public void AllowSingleStrickeInAFrame()
         {
             Frame frame = new Frame(10);
             martianGame.AddFrame(frame);
             martianGame.AddFrame(frame);
+        }
+        [Test]
+        public void AllowSingleStrickeInAFrameByRolling()
+        {
+            martianGame.Roll(10);
+            martianGame.Roll(10);
+            Assert.AreEqual(2,martianGame.Frames().Count);
         }
 
         [Test]
@@ -71,6 +78,24 @@ namespace bowlingkata
         }
 
         [Test]
+        public void BounsForAnyStrikeIsTheTotalOfLastFrameByRolling()
+        {
+            martianGame.Roll(10);
+
+            martianGame.Roll(1);
+            martianGame.Roll(1);
+            martianGame.Roll(1);
+            
+            martianGame.Roll(2);
+            martianGame.Roll(1);
+            martianGame.Roll(1);
+
+            Assert.AreEqual(10 + 3 + 4 + 4, martianGame.Score());
+        }
+
+
+
+        [Test]
         [ExpectedException]
         public void ShouldNotAcceptMoreFrameIfGameIsOver()
         {
@@ -82,11 +107,33 @@ namespace bowlingkata
             martianGame.AddFrame(secondFrame);
             martianGame.AddFrame(lastFrame);
             martianGame.AddFrame(oneMoreFrame);
-            //            Assert.AreEqual(10 + 3 + 4 + 4, martianGame.Score());
-
+            Assert.AreEqual(10 + 3 + 4 + 4, martianGame.Score());
 
         }
 
+        [Test]
+        [ExpectedException]
+        public void ShouldNotAcceptMoreFrameIfGameIsOverByRolling()
+        {
+            martianGame.Roll(10);
+
+            martianGame.Roll(1);
+            martianGame.Roll(1);
+            martianGame.Roll(1);
+            
+            martianGame.Roll(2);
+            martianGame.Roll(1);
+            martianGame.Roll(1);
+            
+            martianGame.AddFrame(new Frame(10));;
+                       
+        }
+
+
     }
+
+
+
+
 
 }
