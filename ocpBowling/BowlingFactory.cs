@@ -31,8 +31,6 @@ namespace ocpBowling
 
         private static void SetMartianBowlingFrameConstraints(Bowling martianBowling)
         {
-
-
             Constraint upToThreeRollsUnlessDropTenEarlier =
                 x => ((x.Rolls.Count == 3 && x.Rolls.Sum() <= 10) || (x.Rolls.Count < 3 && x.Rolls.Sum() == 10));
             
@@ -48,9 +46,7 @@ namespace ocpBowling
         private static void SetTerrestrianBonusRules(Bowling terrestrialBowling)
         {
             List<RuleForFrame> ruleForNinthFrame = new List<RuleForFrame> { new TerrestrianStrikeRuleForTheNinthFrame(), new TerrestrianSpareRule() };
-
-            List<RuleForFrame> ruleForFirstEightFrame = new List<RuleForFrame> {new TerrestrianFirstEightFramesStrikeRule(),new TerrestrianSpareRule()};
-            
+            List<RuleForFrame> ruleForFirstEightFrame = new List<RuleForFrame> {new TerrestrianFirstEightFramesStrikeRule(),new TerrestrianSpareRule()};            
             List<RuleForFrame> rulesForLastFrame = new List<RuleForFrame> { new TerrestrianLastFrameRule() };
 
 
@@ -85,6 +81,7 @@ namespace ocpBowling
             { 
                 terrestrialBowling.SetConstraintForFrame(plainFrameConstraintD,i);
             }
+
             Constraint sumRollsNoHigherThanThirty = x => x.Rolls.Sum() <= 30;
             Constraint ifFirstRollIsTenThanThereIsAtLeastAnotherRoll = x => !(x.Rolls[0]==10)||x.Rolls.Count > 1;
 
