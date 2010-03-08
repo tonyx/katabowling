@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NBehave.Narrator.Framework;
+
 using NUnit.Framework;
 using ocpBowling;
-using NBehave.Spec.NUnit;
 
 namespace bowlingkata
 {
