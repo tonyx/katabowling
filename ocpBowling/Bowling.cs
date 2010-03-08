@@ -32,12 +32,18 @@ namespace ocpBowling
 
             for (int i = 0; i < theFrames.Length; i++)
             {
-                toReturn += theFrames[i].Rolls.Sum();                
+                toReturn += ComputeScoreForFrame(theFrames[i]);
                 int bonus = ComputeBonus(theFrames, i);
                 toReturn += bonus;
             }
             return toReturn;
         }
+
+        private int ComputeScoreForFrame(Frame frame)
+        {
+            return frame.Rolls.Sum();
+        }
+
 
         private int ComputeBonus(Frame[] frames, int i)
         {

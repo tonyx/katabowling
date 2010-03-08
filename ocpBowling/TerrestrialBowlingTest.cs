@@ -30,8 +30,7 @@ namespace ocpBowling
         {
             for (int i=0;i<20;i++)
             {
-                terrestrialGame.Roll(0);
-                
+                terrestrialGame.Roll(0);                
             }
             Assert.AreEqual(0,terrestrialGame.Score());
         }

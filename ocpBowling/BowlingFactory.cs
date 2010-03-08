@@ -9,7 +9,7 @@ namespace ocpBowling
         public static Bowling CreateTerrestrialBowling()
         {
             Bowling terrestrialBowling = new Bowling();
-            SetTerrestrialBowlingConstraints(terrestrialBowling);
+            SetTerrestrialBowlingFrameConstraints(terrestrialBowling);
             SetTerrestrianBonusRules(terrestrialBowling);
             return terrestrialBowling;
         }
@@ -64,11 +64,12 @@ namespace ocpBowling
         }
 
 
-        private static void SetTerrestrialBowlingConstraints(Bowling terrestrialBowling)
+        private static void SetTerrestrialBowlingFrameConstraints(Bowling terrestrialBowling)
         {
             Constraint sumOfAllRollMustbeLessThanTen = (x => x.Rolls.Sum() <= 10);
             Constraint ifFirstRollIsTenThanTheFrameIsOver = (x => (!(x.Rolls[0] == 10) || x.Rolls.Count == 1));
-            Constraint ifFirstRollIsLessThanTenThenThereIsAnotherRollInTheFrame = (x => (!(x.Rolls[0] < 10) || x.Rolls.Count == 2));
+            Constraint ifFirstRollIsLessThanTenThenThereIsAnotherRollInTheFrame = 
+                (x => (!(x.Rolls[0] < 10) || x.Rolls.Count == 2));
 
             Constraint plainFrameConstraint =
                             (x =>
@@ -76,7 +77,9 @@ namespace ocpBowling
                               (ifFirstRollIsTenThanTheFrameIsOver(x) && 
                               ifFirstRollIsLessThanTenThenThereIsAnotherRollInTheFrame(x))));
 
-            ConstraintAndDesription plainFrameConstraintD = new ConstraintAndDesription("sum of all roll must be less or equals to ten AND (frame with strike has only one roll OR frame with no strike has two rolls)", plainFrameConstraint);
+            ConstraintAndDesription plainFrameConstraintD = 
+                new ConstraintAndDesription("sum of all roll must be less or equals to ten AND "+
+                    "(frame with strike has only one roll OR frame with no strike has two rolls)", plainFrameConstraint);
 
             for (int i = 0; i < 9; i++)
             { 

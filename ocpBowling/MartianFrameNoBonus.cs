@@ -1,7 +1,7 @@
 ﻿namespace ocpBowling
 {
     public class MartianFrameNoBonus : RuleForFrame
-    {
+    {        
         public int Bonus(Frame[] frames, int i)
         {
             return 0;
