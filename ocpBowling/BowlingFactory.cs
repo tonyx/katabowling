@@ -47,7 +47,7 @@ namespace ocpBowling
 
         private static void SetTerrestrianBonusRules(Bowling terrestrialBowling)
         {
-            List<RuleForFrame> ruleForPlainFrame = new List<RuleForFrame> { new TerrestrianStrikeRuleForTheNinthFrame(), new TerrestrianSpareRule() };
+            List<RuleForFrame> ruleForNinthFrame = new List<RuleForFrame> { new TerrestrianStrikeRuleForTheNinthFrame(), new TerrestrianSpareRule() };
 
             List<RuleForFrame> ruleForFirstEightFrame = new List<RuleForFrame> {new TerrestrianFirstEightFramesStrikeRule(),new TerrestrianSpareRule()};
             
@@ -58,12 +58,8 @@ namespace ocpBowling
             {
                 terrestrialBowling.SetRulesForFrame(ruleForFirstEightFrame,i);
             }
-            terrestrialBowling.SetRulesForFrame(ruleForPlainFrame, 8);
+            terrestrialBowling.SetRulesForFrame(ruleForNinthFrame, 8);
 
-//                for (int i = 0; i < 9; i++)
-//                {
-//                    terrestrialBowling.SetRulesForFrame(ruleForPlainFrame, i);
-//                }
             terrestrialBowling.SetRulesForFrame(rulesForLastFrame,9);
         }
 
