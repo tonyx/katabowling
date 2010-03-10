@@ -13,17 +13,12 @@ namespace ocpBowling
 
         public bool ConditionToBreak(Frame[] frames, int i)
         {
-            if (Matches(frames, i))
-                return true;
-            return false;
+            return (Matches(frames, i));
         }
 
         private bool Matches(Frame[] frames, int i)
         {
-            if (i != frames.Length - 1)
-                if (Strike(frames[i]))
-                    return true;
-            return false;
+            return (Strike(frames[i]));
         }
 
         private bool Strike(Frame frame)
