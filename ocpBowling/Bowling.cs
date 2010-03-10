@@ -91,8 +91,7 @@ namespace ocpBowling
             ConstraintAndDesription constrintAndDescription;
             if (indexConstraintForFrame.TryGetValue(index,out constrintAndDescription))
             {
-                bool matches = constrintAndDescription.TheConstraint.Invoke(frame);
-                if (!matches)
+                if (!constrintAndDescription.Matches(frame))
                 {
                     throw new FormatException("violated constraint " + constrintAndDescription + " in frame " + frame.ToString());                    
                 }                
