@@ -23,7 +23,7 @@ namespace ocpBowling
 
         private bool spare(Frame frame)
         {
-            return ((frame.Rolls.Sum(x => x))==10);
+            return ((frame.Rolls.Sum())==10);
         }
 
     }
