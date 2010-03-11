@@ -11,14 +11,12 @@
             _description = description;
             _constraint = constraint;
         }
-        
-        public Constraint TheConstraint
+
+        public bool Matches(Frame frame)
         {
-            get
-            {
-                return _constraint;
-            }
+            return _constraint.Invoke(frame);
         }
+        
         public override string ToString()
         {
             return "["+_description + "|"+ _constraint + " ]";

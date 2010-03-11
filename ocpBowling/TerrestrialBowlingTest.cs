@@ -149,9 +149,6 @@ namespace ocpBowling
             Assert.AreEqual(11, terrestrialGame.Score());
         }
 
-
-
-
         [Test]
         public void TestLastRollWithNoStrike()
         {

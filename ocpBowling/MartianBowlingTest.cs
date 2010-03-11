@@ -106,7 +106,6 @@ namespace bowlingkata
             martianGame.AddFrame(secondFrame);
             martianGame.AddFrame(lastFrame);
             martianGame.AddFrame(oneMoreFrame);
-            Assert.AreEqual(10 + 3 + 4 + 4, martianGame.Score());
 
         }
 
