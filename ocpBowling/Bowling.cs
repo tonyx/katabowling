@@ -5,6 +5,7 @@ namespace ocpBowling
 {
     public class Bowling
     {
+//        private Dictionary<int,PlainScoreFunction> plainScoreForFrame = new Dictionary<int,PlainScoreFunction>();
         private List<int> rollsNotInFrame = new List<int>();
         private Dictionary<int, List<RuleForFrame>> indexRuleForFrame = new Dictionary<int, List<RuleForFrame>>();
         private Dictionary<int, ConstraintAndDesription> indexConstraintForFrame = new Dictionary<int, ConstraintAndDesription>();
@@ -81,6 +82,11 @@ namespace ocpBowling
         {
             indexRuleForFrame.Add(frameIndex,rules);
         }
+
+//        public void SetPlainScoreForFrame(PlainScoreFunction scoreFunction, int i)
+//        {
+//            this.plainScoreForFrame.Add(i,scoreFunction);
+//        }
        
 
 

@@ -1,4 +1,6 @@
-﻿namespace ocpBowling
+﻿using System;
+
+namespace ocpBowling
 {
     public class TerrestrianLastFrameRule : RuleForFrame
     {
@@ -11,5 +13,6 @@
         {
             return true;
         }
+
     }
 }

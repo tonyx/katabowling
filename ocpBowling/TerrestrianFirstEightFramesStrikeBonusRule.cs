@@ -1,4 +1,6 @@
-﻿namespace ocpBowling
+﻿using System;
+
+namespace ocpBowling
 {
     class TerrestrianFirstEightFramesStrikeRule : RuleForFrame
     {

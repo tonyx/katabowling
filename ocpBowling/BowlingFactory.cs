@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace ocpBowling
 {
+    public delegate int PlainScoreFunction(Frame frame);
     public static class BowlingFactory
     {
         public static Bowling CreateTerrestrialBowling()

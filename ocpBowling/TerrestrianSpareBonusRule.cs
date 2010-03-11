@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 namespace ocpBowling
 {
     public class TerrestrianSpareRule : RuleForFrame
@@ -20,6 +21,7 @@ namespace ocpBowling
         {
             return Matches(frames, i);
         }
+
 
         private bool spare(Frame frame)
         {

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 namespace ocpBowling
 {
     public class TerrestrianStrikeRuleForTheNinthFrame : RuleForFrame
