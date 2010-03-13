@@ -11,12 +11,11 @@ The original bowling kata description by Robert Martin is here: http://butuncleb
 Ocp kata:
 The ocp kata tecnique forces the respect of the open closed principle. 
 Any new feature must be implemented by extensions and no modifications of any existing module but the factory. 
-If it is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting base code closed to modification for the implementation of this new feature.
+If it is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting base ready to implement the new feature using the open closed principle.
 After this refactoring  the test must be de-ignored add the code that makes the test pass can be added (respecting ocp by definition).
 
 
 notes:
-
 may be there is the need to check a "legacy" source of bowling score calculation. Here there is one:
 http://tralvex.com/pub/bowling/BSC.htm
 
