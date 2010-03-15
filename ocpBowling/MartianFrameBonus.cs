@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace ocpBowling
 {
-    public class MartianFrameBonus : RuleForFrame
+    public class MartianFrameBonus : IBonusRuleForFrame
     {
         public int Bonus(Frame[] frames, int i)
         {
@@ -20,7 +20,6 @@ namespace ocpBowling
         {
             return true;
         }
-
 
     }
 }

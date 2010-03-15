@@ -2,7 +2,7 @@
 using System.Linq;
 namespace ocpBowling
 {
-    public class TerrestrianSpareRule : RuleForFrame
+    public class TerrestrianSpareBonusRule : IBonusRuleForFrame
     {
 
         public int Bonus(Frame[] frames, int i)

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using bowlingkata;
 
 namespace ocpBowling
 {
-    public delegate int PlainScoreFunction(Frame frame);
     public static class BowlingFactory
     {
         public static Bowling CreateTerrestrialBowling()
@@ -12,6 +12,7 @@ namespace ocpBowling
             Bowling terrestrialBowling = new Bowling();
             SetTerrestrialBowlingFrameConstraints(terrestrialBowling);
             SetTerrestrianBonusRules(terrestrialBowling);
+            SetTerrestrialScorerules(terrestrialBowling);
             return terrestrialBowling;
         }
 
@@ -20,14 +21,32 @@ namespace ocpBowling
             Bowling martianBowling = new Bowling();
             SetMartianBowlingFrameConstraints(martianBowling);
             SetMartianBowlingRules(martianBowling);
+            SetMartianBowlingScoreRules(martianBowling);
             return martianBowling;
+        }
+
+
+        private static void SetTerrestrialScorerules(Bowling terrestrialBowling)
+        {
+            IScoreRuleForFrame plainScoreRuleForFrame = new PlainScoreRuleForFrame();
+            for (int i=0;i<10;i++)
+                terrestrialBowling.SetScoreForFrame(plainScoreRuleForFrame,i);
+        }
+
+
+        private static void SetMartianBowlingScoreRules(Bowling bowling)
+        {
+            IScoreRuleForFrame plainScoreRuleForFrame = new PlainScoreRuleForFrame();
+            for (int i = 0; i < 10; i++)
+                bowling.SetScoreForFrame(plainScoreRuleForFrame, i);
+            
         }
 
         private static void SetMartianBowlingRules(Bowling martianBowling)
         {
-            martianBowling.SetRulesForFrame(new List<RuleForFrame>{new MartianFrameBonus()},0);
-            martianBowling.SetRulesForFrame(new List<RuleForFrame>{new MartianFrameBonus()},1);
-            martianBowling.SetRulesForFrame(new List<RuleForFrame>{new MartianFrameNoBonus()},2);
+            martianBowling.SetRulesForFrame(new List<IBonusRuleForFrame>{new MartianFrameBonus()},0);
+            martianBowling.SetRulesForFrame(new List<IBonusRuleForFrame>{new MartianFrameBonus()},1);
+            martianBowling.SetRulesForFrame(new List<IBonusRuleForFrame>{new MartianFrameNoBonus()},2);
         }
 
         private static void SetMartianBowlingFrameConstraints(Bowling martianBowling)
@@ -35,8 +54,8 @@ namespace ocpBowling
             Constraint upToThreeRollsUnlessDropTenEarlier =
                 x => ((x.Rolls.Count == 3 && x.Rolls.Sum() <= 10) || (x.Rolls.Count < 3 && x.Rolls.Sum() == 10));
             
-            ConstraintAndDesription upToThreeRollsUnlessDropTenEarlierD =
-                new ConstraintAndDesription("up to three rolls unless drop ten earlier",upToThreeRollsUnlessDropTenEarlier);
+            ConstraintAndDescription upToThreeRollsUnlessDropTenEarlierD =
+                new ConstraintAndDescription("up to three rolls unless drop ten earlier",upToThreeRollsUnlessDropTenEarlier);
 
             martianBowling.SetConstraintForFrame(upToThreeRollsUnlessDropTenEarlierD,0);
             martianBowling.SetConstraintForFrame(upToThreeRollsUnlessDropTenEarlierD,1);
@@ -46,9 +65,9 @@ namespace ocpBowling
 
         private static void SetTerrestrianBonusRules(Bowling terrestrialBowling)
         {
-            List<RuleForFrame> ruleForNinthFrame = new List<RuleForFrame> { new TerrestrianStrikeRuleForTheNinthFrame(), new TerrestrianSpareRule() };
-            List<RuleForFrame> ruleForFirstEightFrame = new List<RuleForFrame> {new TerrestrianFirstEightFramesStrikeRule(),new TerrestrianSpareRule()};            
-            List<RuleForFrame> rulesForLastFrame = new List<RuleForFrame> { new TerrestrianLastFrameRule() };
+            List<IBonusRuleForFrame> ruleForNinthFrame = new List<IBonusRuleForFrame> { new TerrestrianStrikeBonusRuleForTheNinthFrame(), new TerrestrianSpareBonusRule() };
+            List<IBonusRuleForFrame> ruleForFirstEightFrame = new List<IBonusRuleForFrame> {new TerrestrianFirstEightFramesStrikeBonusRule(),new TerrestrianSpareBonusRule()};            
+            List<IBonusRuleForFrame> rulesForLastFrame = new List<IBonusRuleForFrame> { new TerrestrianLastFrameBonusRule() };
 
 
             for (int i = 0; i < 8;i++ )
@@ -74,8 +93,8 @@ namespace ocpBowling
                               (ifFirstRollIsTenThanTheFrameIsOver(x) && 
                               ifFirstRollIsLessThanTenThenThereIsAnotherRollInTheFrame(x))));
 
-            ConstraintAndDesription plainFrameConstraintD = 
-                new ConstraintAndDesription("sum of all roll must be less or equals to ten AND "+
+            ConstraintAndDescription plainFrameConstraintD = 
+                new ConstraintAndDescription("sum of all roll must be less or equals to ten AND "+
                     "(frame with strike has only one roll OR frame with no strike has two rolls)", plainFrameConstraint);
 
             for (int i = 0; i < 9; i++)
@@ -94,7 +113,7 @@ namespace ocpBowling
                     ifFirstRollIsTenThanThereIsAtLeastAnotherRoll(x)&& 
                     ifSecondRollIsTenThenThereIsAnotherRoll(x));
 
-            ConstraintAndDesription noHigherThanThirtyAndAllowMoreRollsIfNoStrikeD = new ConstraintAndDesription("noHigherThanThirtyAndAllowMoreRollsIfNoStrike", noHigherThanThirtyAndAllowMoreRollsIfNoStrike);
+            ConstraintAndDescription noHigherThanThirtyAndAllowMoreRollsIfNoStrikeD = new ConstraintAndDescription("noHigherThanThirtyAndAllowMoreRollsIfNoStrike", noHigherThanThirtyAndAllowMoreRollsIfNoStrike);
 
             terrestrialBowling.SetConstraintForFrame(noHigherThanThirtyAndAllowMoreRollsIfNoStrikeD,9);
                

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using bowlingkata;
+
 namespace ocpBowling
 {
     public class Bowling
     {
-//        private Dictionary<int,PlainScoreFunction> plainScoreForFrame = new Dictionary<int,PlainScoreFunction>();
+        private Dictionary<int,IScoreRuleForFrame> indexPlainScoreRuleForFrame = new Dictionary<int, IScoreRuleForFrame>();
         private List<int> rollsNotInFrame = new List<int>();
-        private Dictionary<int, List<RuleForFrame>> indexRuleForFrame = new Dictionary<int, List<RuleForFrame>>();
-        private Dictionary<int, ConstraintAndDesription> indexConstraintForFrame = new Dictionary<int, ConstraintAndDesription>();
+        private Dictionary<int, List<IBonusRuleForFrame>> indexRuleForFrame = new Dictionary<int, List<IBonusRuleForFrame>>();
+        private Dictionary<int, ConstraintAndDescription> indexConstraintForFrame = new Dictionary<int, ConstraintAndDescription>();
         private List<Frame> frames = new List<Frame>();
-        private List<ConstraintAndDesription> constraintAndDescriptionList = new List<ConstraintAndDesription>();
 
 
         public void Roll(int roll)
@@ -33,11 +34,24 @@ namespace ocpBowling
 
             for (int i = 0; i < theFrames.Length; i++)
             {
-                toReturn += ComputeScoreForFrame(theFrames[i]);
+//                toReturn += ComputeScoreForFrame(theFrames[i]);
+                toReturn += ComputeScore(theFrames, i);
                 int bonus = ComputeBonus(theFrames, i);
                 toReturn += bonus;
             }
             return toReturn;
+        }
+
+        private int ComputeScore(Frame[] frames, int i)
+        {
+            int toReturn = 0;
+            IScoreRuleForFrame scoreRule;
+            if (indexPlainScoreRuleForFrame.TryGetValue(i, out scoreRule))
+            {
+                return scoreRule.Score(frames, i);
+            }
+
+            return ComputeScoreForFrame(frames[i]);
         }
 
         private int ComputeScoreForFrame(Frame frame)
@@ -49,11 +63,11 @@ namespace ocpBowling
         private int ComputeBonus(Frame[] frames, int i)
         {
             int toReturn = 0;
-            List<RuleForFrame> ruleForFrames;
+            List<IBonusRuleForFrame> ruleForFrames;
 
             if (indexRuleForFrame.TryGetValue(i, out ruleForFrames))
             {
-                foreach (RuleForFrame rule in ruleForFrames)
+                foreach (IBonusRuleForFrame rule in ruleForFrames)
                 {
                     toReturn += rule.Bonus(frames, i);
                     if (rule.ConditionToBreak(frames, i))
@@ -67,34 +81,28 @@ namespace ocpBowling
         }
 
 
-        public void SetConstraintForFrame(ConstraintAndDesription constraint, int frameIndex)
+        public void SetConstraintForFrame(ConstraintAndDescription constraint, int frameIndex)
         {
             indexConstraintForFrame.Add(frameIndex,constraint);
         }
 
-        public void AddConstraintAndDescription(ConstraintAndDesription constraintAndDescription)
-        {
-            constraintAndDescriptionList.Add(constraintAndDescription);
-        }
 
 
-        public void SetRulesForFrame(List<RuleForFrame> rules, int frameIndex)
+        public void SetRulesForFrame(List<IBonusRuleForFrame> rules, int frameIndex)
         {
             indexRuleForFrame.Add(frameIndex,rules);
         }
 
-//        public void SetPlainScoreForFrame(PlainScoreFunction scoreFunction, int i)
-//        {
-//            this.plainScoreForFrame.Add(i,scoreFunction);
-//        }
-       
-
+        public void SetScoreForFrame(IScoreRuleForFrame scoreRule, int frameIndex)
+        {
+            this.indexPlainScoreRuleForFrame.Add(frameIndex,scoreRule);            
+        }
 
 
         /// <exception cref="FormatException"></exception>
         private void CheckConstraint(Frame frame, int index)
         {
-            ConstraintAndDesription constrintAndDescription;
+            ConstraintAndDescription constrintAndDescription;
             if (indexConstraintForFrame.TryGetValue(index,out constrintAndDescription))
             {
                 if (!constrintAndDescription.Matches(frame))

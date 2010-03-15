@@ -2,7 +2,7 @@
 
 namespace ocpBowling
 {
-    public class MartianFrameNoBonus : RuleForFrame
+    public class MartianFrameNoBonus : IBonusRuleForFrame
     {        
         public int Bonus(Frame[] frames, int i)
         {

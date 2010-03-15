@@ -2,7 +2,7 @@
 
 namespace ocpBowling
 {
-    class TerrestrianFirstEightFramesStrikeRule : RuleForFrame
+    class TerrestrianFirstEightFramesStrikeBonusRule : IBonusRuleForFrame
     {
         public int Bonus(Frame[] frames, int i)
         {
