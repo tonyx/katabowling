@@ -11,8 +11,8 @@ The original bowling kata description by Robert Martin is here: http://butuncleb
 Ocp kata:
 The ocp kata tecnique forces the respect of the open closed principle. 
 Any new feature must be implemented by extensions and no modifications of any existing module but the factory. 
-If it is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting base ready to implement the new feature using the open closed principle.
-After this refactoring  the test must be de-ignored add the code that makes the test pass can be added (respecting ocp by definition).
+If it is not possibile, then the test for the new feature must be ignored, and a refactoring is needed in order to make the preexisting base ready to implement the new feature following the open closed principle.
+After this refactoring  the test must be de-ignored and the code that makes the test pass can be added (respecting ocp by definition).
 
 
 notes:
@@ -27,8 +27,5 @@ Seems to me that the solution is already closed to modifications for any new bow
 
 The "martian bowling" game rules are an example of this because there is a different rule to compute the bonus and to validate the frame.
 
-For any new implementation the total score will still the the sum of all the pins dropped plus the sum of all the bonuses. 
-
-So the solution is not closed to any extension that dees not follow this behavior.
 
 
