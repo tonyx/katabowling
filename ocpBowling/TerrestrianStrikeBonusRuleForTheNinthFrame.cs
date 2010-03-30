@@ -6,9 +6,8 @@ namespace ocpBowling
     {
         public int Bonus(Frame[] frames, int i)
         {
-            Frame lastFrame = ( frames[frames.Length - 1]);
             if (Strike(frames[i]))
-                return lastFrame.Rolls.Take(2).Sum();
+                return frames.NextTwoRolls(i);
             return 0;   
         }
 
@@ -21,5 +20,6 @@ namespace ocpBowling
         {
             return frame.Rolls[0] == 10;
         }
+
     }
 }

@@ -18,20 +18,14 @@ namespace ocpBowling
         public void TestAllZeroes()
         {
             Frame frame = new Frame(0,0);
-            for (int i = 0; i < 10; i++)
-            {
-                terrestrialGame.AddFrame(frame);
-            }
+            terrestrialGame.AddMany(frame,10);
             Assert.AreEqual(0, terrestrialGame.Score());
         }
 
         [Test]
         public void TestAllZeroesByRolling()
         {
-            for (int i=0;i<20;i++)
-            {
-                terrestrialGame.Roll(0);                
-            }
+            terrestrialGame.RollMany(0,20);
             Assert.AreEqual(0,terrestrialGame.Score());
         }
 
@@ -40,10 +34,7 @@ namespace ocpBowling
         public void TestPlaingGameNoSpareOrStrikes()
         {
             Frame frame = new Frame(1,1);
-            for (int i = 0; i < 9; i++)
-            {
-                terrestrialGame.AddFrame(frame);
-            }
+            terrestrialGame.AddMany(frame,9);
             Frame Frame = new Frame(1);
             terrestrialGame.AddFrame(Frame);
             Assert.AreEqual(19, terrestrialGame.Score());
@@ -51,10 +42,11 @@ namespace ocpBowling
         [Test]
         public void TestPlaingGameNoSpareOrStrikesByRolling()
         {
-            for (int i = 0; i < 18;i++ )
-            {
-                terrestrialGame.Roll(1);
-            }
+//            for (int i = 0; i < 18;i++ )
+//            {
+//                terrestrialGame.Roll(1);
+//            }
+            terrestrialGame.RollMany(1,18);
             terrestrialGame.Roll(1);
             Assert.AreEqual(19,terrestrialGame.Score());
 
@@ -69,10 +61,7 @@ namespace ocpBowling
             terrestrialGame.AddFrame(firstFrame);
             terrestrialGame.AddFrame(secondFrame);
             Frame emptyFrame = new Frame(0,0);
-            for (int i = 2; i < 9;i++ )
-            {
-                terrestrialGame.AddFrame(emptyFrame);    
-            }
+            terrestrialGame.AddMany(emptyFrame,7);
             Frame Frame = new Frame(0);
             terrestrialGame.AddFrame(Frame);
             Assert.AreEqual(12, terrestrialGame.Score());
@@ -85,10 +74,7 @@ namespace ocpBowling
             terrestrialGame.Roll(1);
             terrestrialGame.Roll(0);
 
-            for (int i=4;i<18;i++)
-            {
-                terrestrialGame.Roll(0);
-            }
+            terrestrialGame.RollMany(0,14);
             terrestrialGame.Roll(0);
             Assert.AreEqual(12,terrestrialGame.Score());
         }
@@ -102,10 +88,7 @@ namespace ocpBowling
             terrestrialGame.AddFrame(firstFrame);
             terrestrialGame.AddFrame(secondFrame);
             Frame emptyFrame = new Frame(0,0);
-            for (int i = 2; i < 9;i++ )
-            {
-                terrestrialGame.AddFrame(emptyFrame);
-            }
+            terrestrialGame.AddMany(emptyFrame,7);
             Frame Frame = new Frame(0);
             terrestrialGame.AddFrame(Frame);
             Assert.AreEqual(14, terrestrialGame.Score());
@@ -117,10 +100,7 @@ namespace ocpBowling
             terrestrialGame.Roll(10);
             terrestrialGame.Roll(1);
             terrestrialGame.Roll(1);
-            for (int i=4;i<18;i++)
-            {
-                terrestrialGame.Roll(0);
-            }
+            terrestrialGame.RollMany(0,14);
             terrestrialGame.Roll(0);
             Assert.AreEqual(14,terrestrialGame.Score());
         }
@@ -130,20 +110,14 @@ namespace ocpBowling
         {            
             Frame Frame = new Frame(10,1);
             Frame emtpyFrame = new Frame(0,0);
-            for (int i = 0; i < 9; i++)
-            {
-                terrestrialGame.AddFrame(emtpyFrame);
-            }
+            terrestrialGame.AddMany(emtpyFrame,9);
             terrestrialGame.AddFrame(Frame);
             Assert.AreEqual(11, terrestrialGame.Score());
         }
         [Test]
         public void TestLastRollGetAnotherRollIfThereIsAstrikeByRolling()
         {
-            for (int i=0;i<18;i++)
-            {
-                terrestrialGame.Roll(0);
-            }
+            terrestrialGame.RollMany(0,18);
             terrestrialGame.Roll(10);
             terrestrialGame.Roll(1);
             Assert.AreEqual(11, terrestrialGame.Score());
@@ -153,10 +127,7 @@ namespace ocpBowling
         public void TestLastRollWithNoStrike()
         {
             Frame strike = new Frame(10);
-            for (int i = 0; i < 9; i++)
-            {
-                terrestrialGame.AddFrame(strike);
-            }
+            terrestrialGame.AddMany(strike,9);
             Frame lastStrike = new Frame(0);
             terrestrialGame.AddFrame(lastStrike);
             Assert.AreEqual(240, terrestrialGame.Score());            
@@ -164,10 +135,7 @@ namespace ocpBowling
         [Test]
         public void TestLastRollWithNoStrikeByRolling()
         {
-            for (int i=0;i<9;i++)
-            {
-                terrestrialGame.Roll(10);
-            }
+            terrestrialGame.RollMany(10,9);
             terrestrialGame.Roll(0);
             Assert.AreEqual(240, terrestrialGame.Score());
         }
@@ -177,10 +145,7 @@ namespace ocpBowling
         public void TestAllStrickeandLastRollIsTen()
         {
             Frame strike = new Frame(10);
-            for (int i = 0; i < 9; i++)
-            {
-                terrestrialGame.AddFrame(strike);
-            }
+            terrestrialGame.AddMany(strike,9);
             Frame lastStrike = new Frame(10,0);
             terrestrialGame.AddFrame(lastStrike);
             Assert.AreEqual(270, terrestrialGame.Score());
@@ -188,35 +153,26 @@ namespace ocpBowling
         [Test]
         public void TestAllStrickeandLastRollIsTenByRolling()
         {
-            for (int i=0;i<10;i++)
-            {
-                terrestrialGame.Roll(10);
-            }
+            terrestrialGame.RollMany(10,10);
             terrestrialGame.Roll(0);
             Assert.AreEqual(270, terrestrialGame.Score());
         }
 
 
         [Test]
-        public void testStrikeAll()
+        public void testStrikeAllAndLast1()
         {
             Frame strike = new Frame(10);
-            for (int i = 0; i < 9; i++)
-            {
-                terrestrialGame.AddFrame(strike);
-            }
+            terrestrialGame.AddMany(strike,9);
             Frame lastStrike = new Frame(10,10,1);
             terrestrialGame.AddFrame(lastStrike);
             Assert.AreEqual(291, terrestrialGame.Score());            
         }
 
         [Test]
-        public void testStrikeAllByRolling()
+        public void testStrikeAndLast1AllByRolling()
         {
-            for (int i=0;i<9;i++)
-            {
-                terrestrialGame.Roll(10);
-            }
+            terrestrialGame.RollMany(10, 9);
             terrestrialGame.Roll(10);
             terrestrialGame.Roll(10);
             terrestrialGame.Roll(1);            
@@ -226,10 +182,7 @@ namespace ocpBowling
         public void testPerfectStrike()
         {
             Frame strike = new Frame(10);
-            for (int i = 0; i < 9; i++)
-            {
-                terrestrialGame.AddFrame(strike);
-            }
+            terrestrialGame.AddMany(strike,9);
             Frame lastStrike = new Frame(10,10,10);
             terrestrialGame.AddFrame(lastStrike);
             Assert.AreEqual(300, terrestrialGame.Score());
@@ -237,10 +190,7 @@ namespace ocpBowling
         [Test]
         public void testPerfectStrikeByRolling()
         {
-            for (int i=0;i<12;i++)
-            {
-                terrestrialGame.Roll(10);
-            }
+            terrestrialGame.RollMany(10,12);
             Assert.AreEqual(300, terrestrialGame.Score());
         }
 
@@ -249,10 +199,7 @@ namespace ocpBowling
         public void tenthIsStrikeWhileFollowingNot()
         {
             Frame noPoints = new Frame(0,0);
-            for (int i = 0; i < 9; i++)
-            {
-                terrestrialGame.AddFrame(noPoints);
-            }
+            terrestrialGame.AddMany(noPoints,9);
             Frame Frame = new Frame(10,1);
             terrestrialGame.AddFrame(Frame);
             Assert.AreEqual(11, terrestrialGame.Score());
@@ -260,10 +207,7 @@ namespace ocpBowling
         [Test]
         public void tenthIsStrikeWhileFollowingNotByRolling()
         {
-            for (int i=0;i<18;i++)
-            {
-                terrestrialGame.Roll(0);
-            }
+            terrestrialGame.RollMany(0,18);
             terrestrialGame.Roll(10);
             terrestrialGame.Roll(1);
             
@@ -275,10 +219,7 @@ namespace ocpBowling
         public void tenthIsStrikeAndTheFollowingAlso()
         {
             Frame noPoints = new Frame(0,0);
-            for (int i = 0; i < 9; i++)
-            {
-                terrestrialGame.AddFrame(noPoints);
-            }
+            terrestrialGame.AddMany(noPoints,9);
             Frame Frame = new Frame(10,10,1);
             terrestrialGame.AddFrame(Frame);
             Assert.AreEqual(21, terrestrialGame.Score());
@@ -286,10 +227,7 @@ namespace ocpBowling
         [Test]
         public void tenthIsStrikeAndTheFollowingAlsoByRolling()
         {
-            for (int i=0;i<18;i++)
-            {
-                terrestrialGame.Roll(0);
-            }
+            terrestrialGame.RollMany(0,18);
             terrestrialGame.Roll(10);
             terrestrialGame.Roll(10);
             terrestrialGame.Roll(1);                        
@@ -300,14 +238,9 @@ namespace ocpBowling
         public void TestFirstThreeAreStrikes()
         {
             Frame strike = new Frame(10);
+            terrestrialGame.AddMany(strike,3);
             Frame emptyFrame = new Frame(0,0);
-            terrestrialGame.AddFrame(strike);
-            terrestrialGame.AddFrame(strike);
-            terrestrialGame.AddFrame(strike);
-            for (int i = 3; i < 9; i++)
-            {
-                terrestrialGame.AddFrame(emptyFrame);
-            }
+            terrestrialGame.AddMany(emptyFrame,6);
             Frame Frame = new Frame(0);
             terrestrialGame.AddFrame(Frame);
             Assert.AreEqual(60, terrestrialGame.Score());
@@ -359,10 +292,7 @@ namespace ocpBowling
         public void TestAllStrickeButLast()
         {
             Frame frame = new Frame(10);
-            for (int i = 0; i < 9; i++)
-            {
-                terrestrialGame.AddFrame(frame);
-            }
+            terrestrialGame.AddMany(frame,9);
             Frame Frame = new Frame(0);
             terrestrialGame.AddFrame(Frame);
 
@@ -374,14 +304,25 @@ namespace ocpBowling
         {
             Bowling game = BowlingFactory.CreateTerrestrialBowling();
             Frame frame = new Frame(10);
-            for (int i = 0; i < 9; i++)
-            {
-                game.AddFrame(frame);
-            }
+            game.AddMany(frame,9);
             Frame Frame = new Frame(10,0);
             game.AddFrame(Frame);
 
             Assert.AreEqual(270, game.Score());
+        }
+
+        [Test]
+        public void TestAllStrickeButLastTwoHasOneAndZero()
+        {
+            Frame frame = new Frame(10);
+            for (int i = 0; i < 9; i++)
+            {
+                terrestrialGame.AddFrame(frame);
+            }
+            Frame Frame = new Frame(10, 1);
+            terrestrialGame.AddFrame(Frame);
+
+            Assert.AreEqual(272, terrestrialGame.Score());
         }
 
 
@@ -389,10 +330,7 @@ namespace ocpBowling
         public void TestAllStrickeButLastTwo()
         {
             Frame frame = new Frame(10);
-            for (int i = 0; i < 9; i++)
-            {
-                terrestrialGame.AddFrame(frame);
-            }
+            terrestrialGame.AddMany(frame,9);
             Frame Frame = new Frame(10,10,1);
             terrestrialGame.AddFrame(Frame);
 
@@ -441,5 +379,21 @@ namespace ocpBowling
             Assert.AreEqual(1,terrestrialGame.Frames().Count);
         }
         
+    }
+
+    public static class ExtensionGame
+    {
+        public static void AddMany(this Bowling bowling,Frame frame, int index)
+        {
+            for (int i = 0; i < index;i++ )
+                bowling.AddFrame(frame);
+        }
+
+        public static void RollMany(this Bowling bowling, int rolled,int index)
+        {
+            for (int i= 0;i<index;i++)
+                bowling.Roll(rolled);            
+        }
+
     }
 }
