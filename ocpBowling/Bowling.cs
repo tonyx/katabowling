@@ -123,4 +123,6 @@ namespace ocpBowling
     public delegate int DelScoreRuleForFrame(Frame frame);
     public delegate int DelBonusRuleForFrame(Frame[] frames, int index);
     
+
+
 }
