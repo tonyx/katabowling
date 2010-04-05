@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 
 namespace ocpBowling
 {
@@ -42,10 +43,7 @@ namespace ocpBowling
         [Test]
         public void TestPlaingGameNoSpareOrStrikesByRolling()
         {
-//            for (int i = 0; i < 18;i++ )
-//            {
-//                terrestrialGame.Roll(1);
-//            }
+
             terrestrialGame.RollMany(1,18);
             terrestrialGame.Roll(1);
             Assert.AreEqual(19,terrestrialGame.Score());
@@ -346,7 +344,7 @@ namespace ocpBowling
         }
 
         [Test]
-        [ExpectedException(ExpectedMessage = "[sum of all roll must be less or equals to ten AND (frame with strike has only one roll OR frame with no strike has two rolls)|ocpBowling.Constraint ] in frame 10 0",MatchType = MessageMatch.Contains)]
+        [ExpectedException(typeof(FormatException),ExpectedMessage = "[sum of all roll must be less or equals to ten AND (frame with strike has only one roll OR frame with no strike has two rolls)|ocpBowling.Constraint ] in frame 10 0",MatchType = MessageMatch.Contains)]
         public void TestThereIsNoSecondRollInAStrike()
         {
             Frame frame = new Frame(10,0);
@@ -354,7 +352,7 @@ namespace ocpBowling
         }
 
         [Test]
-        [ExpectedException(ExpectedMessage = "violated constraint [sum of all roll must be less or equals to ten", MatchType = MessageMatch.Contains)]
+        [ExpectedException(typeof(FormatException),ExpectedMessage = "violated constraint [sum of all roll must be less or equals to ten", MatchType = MessageMatch.Contains)]
         public void TestThereShouldbeASecondRollIfNotStrike()
         {
             Frame frame = new Frame(9);

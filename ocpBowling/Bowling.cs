@@ -7,12 +7,13 @@ namespace ocpBowling
 {
     public class Bowling
     {
-        private Dictionary<int,IScoreRuleForFrame> indexPlainScoreRuleForFrame = new Dictionary<int, IScoreRuleForFrame>();
+
+        private Dictionary<int,List<DelBonusRuleForFrame>> _indexBonusRuleForFrame = new Dictionary<int, List<DelBonusRuleForFrame>>();
         private List<int> rollsNotInFrame = new List<int>();
-        private Dictionary<int, List<IBonusRuleForFrame>> indexRuleForFrame = new Dictionary<int, List<IBonusRuleForFrame>>();
         private Dictionary<int, ConstraintAndDescription> indexConstraintForFrame = new Dictionary<int, ConstraintAndDescription>();
         private List<Frame> frames = new List<Frame>();
 
+        private Dictionary<int,DelScoreRuleForFrame> delBasedRuleForFrame = new Dictionary<int, DelScoreRuleForFrame>();
 
         public void Roll(int roll)
         {
@@ -34,7 +35,6 @@ namespace ocpBowling
 
             for (int i = 0; i < theFrames.Length; i++)
             {
-//                toReturn += ComputeScoreForFrame(theFrames[i]);
                 toReturn += ComputeScore(theFrames, i);
                 int bonus = ComputeBonus(theFrames, i);
                 toReturn += bonus;
@@ -45,39 +45,32 @@ namespace ocpBowling
         private int ComputeScore(Frame[] frames, int i)
         {
             int toReturn = 0;
-            IScoreRuleForFrame scoreRule;
-            if (indexPlainScoreRuleForFrame.TryGetValue(i, out scoreRule))
+
+            DelScoreRuleForFrame scoreScoreRuleForFrame;
+            if (this.delBasedRuleForFrame.TryGetValue(i,out scoreScoreRuleForFrame))
             {
-                return scoreRule.Score(frames, i);
+                return scoreScoreRuleForFrame.Invoke(frames[i]);
             }
 
-            return ComputeScoreForFrame(frames[i]);
+            throw new FormatException("no score rule associated to frame index " + i);
         }
-
-        private int ComputeScoreForFrame(Frame frame)
-        {
-            return frame.Rolls.Sum();
-        }
-
 
         private int ComputeBonus(Frame[] frames, int i)
         {
             int toReturn = 0;
-            List<IBonusRuleForFrame> ruleForFrames;
 
-            if (indexRuleForFrame.TryGetValue(i, out ruleForFrames))
+
+            List<DelBonusRuleForFrame> bonusRulesForFrames;
+            if (this._indexBonusRuleForFrame.TryGetValue(i,out bonusRulesForFrames))
             {
-                foreach (IBonusRuleForFrame rule in ruleForFrames)
+                foreach(DelBonusRuleForFrame rule in bonusRulesForFrames)
                 {
-                    toReturn += rule.Bonus(frames, i);
-                    if (rule.ConditionToBreak(frames, i))
-                    {
-                        break;
-                    }
+                    toReturn += rule.Invoke(frames, i);
                 }
                 return toReturn;
             }
-            return 0;
+            throw new FormatException("no bonus rules list for the index "+i);
+            
         }
 
 
@@ -86,16 +79,15 @@ namespace ocpBowling
             indexConstraintForFrame.Add(frameIndex,constraint);
         }
 
-
-
-        public void SetRulesForFrame(List<IBonusRuleForFrame> rules, int frameIndex)
+        public void SetDelRuleForFrameIndex(DelScoreRuleForFrame scoreRule,int frameIndex)
         {
-            indexRuleForFrame.Add(frameIndex,rules);
+            this.delBasedRuleForFrame.Add(frameIndex,scoreRule);
         }
 
-        public void SetScoreForFrame(IScoreRuleForFrame scoreRule, int frameIndex)
+
+        public void SetDelBonusRulesForFrame(List<DelBonusRuleForFrame> bonusRule,int frameIndex)
         {
-            this.indexPlainScoreRuleForFrame.Add(frameIndex,scoreRule);            
+            this._indexBonusRuleForFrame.Add(frameIndex, bonusRule);            
         }
 
 
@@ -127,4 +119,8 @@ namespace ocpBowling
             return this.frames;
         }
     }
+
+    public delegate int DelScoreRuleForFrame(Frame frame);
+    public delegate int DelBonusRuleForFrame(Frame[] frames, int index);
+    
 }

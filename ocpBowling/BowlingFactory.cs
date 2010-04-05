@@ -25,28 +25,47 @@ namespace ocpBowling
             return martianBowling;
         }
 
-
         private static void SetTerrestrialScorerules(Bowling terrestrialBowling)
         {
-            IScoreRuleForFrame plainScoreRuleForFrame = new PlainScoreRuleForFrame();
+
+            DelScoreRuleForFrame plainScoreRule = x => x.Rolls.Sum();
+
             for (int i=0;i<10;i++)
-                terrestrialBowling.SetScoreForFrame(plainScoreRuleForFrame,i);
+            {
+                terrestrialBowling.SetDelRuleForFrameIndex(plainScoreRule,i);
+            }
+
         }
 
 
         private static void SetMartianBowlingScoreRules(Bowling bowling)
         {
-            IScoreRuleForFrame plainScoreRuleForFrame = new PlainScoreRuleForFrame();
-            for (int i = 0; i < 10; i++)
-                bowling.SetScoreForFrame(plainScoreRuleForFrame, i);
-            
+            DelScoreRuleForFrame plainScoreRule = x => x.Rolls.Sum();
+            for (int i=0;i<3;i++)
+            {
+                bowling.SetDelRuleForFrameIndex(plainScoreRule,i);
+            }            
         }
 
         private static void SetMartianBowlingRules(Bowling martianBowling)
         {
-            martianBowling.SetRulesForFrame(new List<IBonusRuleForFrame>{new MartianFrameBonus()},0);
-            martianBowling.SetRulesForFrame(new List<IBonusRuleForFrame>{new MartianFrameBonus()},1);
-            martianBowling.SetRulesForFrame(new List<IBonusRuleForFrame>{new MartianFrameNoBonus()},2);
+            DelBonusRuleForFrame martianStrikeRule = ((x, i) =>
+                                                          {
+                                                              if (x[i].Rolls[0] == 10)
+                                                              {
+                                                                  return x[x.Length - 1].Rolls.Sum();
+                                                              }
+                                                              return 0;
+                                                          });
+
+            DelBonusRuleForFrame lastFrameMartianBonus = (x, i) => 0;
+
+            List<DelBonusRuleForFrame> strike = new List<DelBonusRuleForFrame>{martianStrikeRule};
+
+            martianBowling.SetDelBonusRulesForFrame(strike,0);
+            martianBowling.SetDelBonusRulesForFrame(strike,1);
+            martianBowling.SetDelBonusRulesForFrame(new List<DelBonusRuleForFrame>{lastFrameMartianBonus}, 2);
+
         }
 
         private static void SetMartianBowlingFrameConstraints(Bowling martianBowling)
@@ -65,19 +84,32 @@ namespace ocpBowling
 
         private static void SetTerrestrianBonusRules(Bowling terrestrialBowling)
         {
-            List<IBonusRuleForFrame> ruleForNinthFrame = new List<IBonusRuleForFrame> { new TerrestrianStrikeBonusRuleForTheNinthFrame(), new TerrestrianSpareBonusRule() };
-            List<IBonusRuleForFrame> ruleForFirstEightFrame = new List<IBonusRuleForFrame> {new TerrestrianFirstEightFramesStrikeBonusRule(),new TerrestrianSpareBonusRule()};            
-            List<IBonusRuleForFrame> rulesForLastFrame = new List<IBonusRuleForFrame> { new TerrestrianLastFrameBonusRule() };
 
+            DelBonusRuleForFrame delSpareRule = (( x, i) =>
+                                                     {
+                                                         if (x[i].Rolls.Sum() == 10 && x[i].Rolls[0] != 10)
+                                                             return x[i + 1].Rolls[0];
+                                                         return 0;
+                                                     });
+            DelBonusRuleForFrame delBonusRule = ((x, i) =>
+                                                     {
+                                                         if (x[i].Rolls[0] == 10)
+                                                             return x.NextTwoRolls(i);
+                                                         return 0;
+                                                     });
 
-            for (int i = 0; i < 8;i++ )
+            DelBonusRuleForFrame delBonusLastFrame = ((x, i) => 0);
+
+            List<DelBonusRuleForFrame> bonusOrSpare = new List<DelBonusRuleForFrame> {delBonusRule, delSpareRule};
+
+            for (int i=0;i<9;i++)
             {
-                terrestrialBowling.SetRulesForFrame(ruleForFirstEightFrame,i);
+                terrestrialBowling.SetDelBonusRulesForFrame(bonusOrSpare,i);                
             }
-            terrestrialBowling.SetRulesForFrame(ruleForNinthFrame, 8);
+            terrestrialBowling.SetDelBonusRulesForFrame(new List<DelBonusRuleForFrame>{delBonusLastFrame},9);
 
-            terrestrialBowling.SetRulesForFrame(rulesForLastFrame,9);
         }
+
 
 
         private static void SetTerrestrialBowlingFrameConstraints(Bowling terrestrialBowling)
