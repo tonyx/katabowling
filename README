@@ -1,9 +1,11 @@
 OCP KATA BOWLING 
 
 
-An implementation of the bowling kata with "ocp rules" as suggested by Matteo Vaccari in his blog:
+An implementation of the bowling game in a way inspired by the "ocp rules":
 
 http://matteo.vaccari.name/blog/archives/293 
+
+Particular instances of bowling games are constructed by a factory where you can inject rules like validity of frames and how to compute scores.
 
 
 The original bowling kata description by Robert Martin is here: http://butunclebob.com/ArticleS.UncleBob.TheBowlingGameKata
