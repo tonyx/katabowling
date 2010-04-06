@@ -11,6 +11,7 @@ namespace ocpBowling
     class GeometricBowlingTest
     {
         private Bowling geometricBowling;
+        
                 
         public bool geoConstraint(Frame frame)
         {
@@ -26,6 +27,7 @@ namespace ocpBowling
             Constraint geometricConstraint = x => geoConstraint(x);            
             ConstraintAndDescription frameOver = new ConstraintAndDescription("over", geometricConstraint);
             geometricBowling.SetConstraintForFrame(frameOver,0);
+            geometricBowling.SetConstraintChecker(new GeometricConstraintChecker(frameOver));
         }
 
         [Test]      
@@ -86,7 +88,6 @@ namespace ocpBowling
         }
 
         [Test]
-        [Ignore]
         public void TheLenOftheFirstFrameMinusOneIsTheTotalNumberOfAllowedFrames()
         {
             Frame frame = new Frame(10,10,10,1);
@@ -94,6 +95,55 @@ namespace ocpBowling
             geometricBowling.AddFrame(frame);
             geometricBowling.AddFrame(furtherFrame);
             geometricBowling.AddFrame(furtherFrame);
+        }
+
+        [Test]
+        [ExpectedException(typeof(FormatException))]
+        public void UntilStrikeExpectAnotherRoll()
+        {
+            Frame frame = new Frame(10,1);
+            Frame further = new Frame(1);
+            geometricBowling.AddFrame(frame);
+            geometricBowling.AddFrame(further);
+            geometricBowling.AddFrame(further);
+            geometricBowling.AddFrame(further);
+            geometricBowling.AddFrame(further);
+        }
+
+        [Test]
+        [ExpectedException(typeof(FormatException))]
+        public void ALotOfFramesUntilLastNotStrike()
+        {
+            Frame frame = new Frame(10, 10, 10, 1);
+            Frame furtherFrame = new Frame(9);
+            geometricBowling.AddFrame(frame);
+            geometricBowling.AddFrame(furtherFrame);
+            geometricBowling.AddFrame(furtherFrame); 
+
+            geometricBowling.AddFrame(furtherFrame);
+
+        }
+
+        [Test]
+        public void FramesOverTheFirstAreTheFurtherStrikes()
+        {
+            Random random = new Random(DateTime.Now.Millisecond);
+            int strikes = random.Next(0, 10);
+
+            List<int> rolls = new List<int>{10};
+            for (int i=0;i<strikes;i++)
+            {
+                rolls.Add(10);
+            }
+            rolls.Add(1);
+            Frame firstFrame = new Frame(rolls);
+            geometricBowling.AddFrame(firstFrame);
+            Frame following = new Frame(0);
+            for (int i = 0; i < strikes;i++ )
+            {
+                geometricBowling.AddFrame(following);
+            }
+            Assert.IsTrue(true);
         }
 
     }

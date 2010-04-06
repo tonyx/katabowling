@@ -5,15 +5,47 @@ using bowlingkata;
 
 namespace ocpBowling
 {
+    public interface IConstraintChecker
+    {
+        void CheckConstraint(Frame frame, int index, Dictionary<int, ConstraintAndDescription> indexConstraintForFrame);
+    }
+
+    public class ConstraintChecker : IConstraintChecker
+    {
+        /// <exception cref="FormatException"></exception>
+        public void CheckConstraint(Frame frame, int index, Dictionary<int, ConstraintAndDescription> indexConstraintForFrame)
+        {
+            ConstraintAndDescription constrintAndDescription;
+            if (indexConstraintForFrame.TryGetValue(index, out constrintAndDescription))
+            {
+                if (!constrintAndDescription.Matches(frame))
+                {
+                    throw new FormatException("violated constraint " + constrintAndDescription + " in frame " + frame.ToString());
+                }
+            }
+            else
+                throw new FormatException("rule error: there is no constraint for frame index " + index);
+        }
+        
+    }
+
+
     public class Bowling
     {
-
+        private IConstraintChecker _constraintChecker;
         private Dictionary<int,List<DelBonusRuleForFrame>> _indexBonusRuleForFrame = new Dictionary<int, List<DelBonusRuleForFrame>>();
         private List<int> rollsNotInFrame = new List<int>();
         private Dictionary<int, ConstraintAndDescription> indexConstraintForFrame = new Dictionary<int, ConstraintAndDescription>();
         private List<Frame> frames = new List<Frame>();
 
         private Dictionary<int,DelScoreRuleForFrame> delBasedRuleForFrame = new Dictionary<int, DelScoreRuleForFrame>();
+
+
+        public Bowling()
+        {
+            this._constraintChecker = new ConstraintChecker();            
+        }
+
 
         public void Roll(int roll)
         {
@@ -91,19 +123,29 @@ namespace ocpBowling
         }
 
 
+        public void SetConstraintChecker(IConstraintChecker constraintChecker)
+        {
+            _constraintChecker = constraintChecker;            
+        }
+
+
+
         /// <exception cref="FormatException"></exception>
         private void CheckConstraint(Frame frame, int index)
         {
-            ConstraintAndDescription constrintAndDescription;
-            if (indexConstraintForFrame.TryGetValue(index,out constrintAndDescription))
-            {
-                if (!constrintAndDescription.Matches(frame))
-                {
-                    throw new FormatException("violated constraint " + constrintAndDescription + " in frame " + frame.ToString());                    
-                }                
-            }
-            else
-                throw new FormatException("rule error: there is no constraint for frame index "+index);            
+            this._constraintChecker.CheckConstraint(frame,index,indexConstraintForFrame);
+
+//
+//            ConstraintAndDescription constrintAndDescription;
+//            if (indexConstraintForFrame.TryGetValue(index,out constrintAndDescription))
+//            {
+//                if (!constrintAndDescription.Matches(frame))
+//                {
+//                    throw new FormatException("violated constraint " + constrintAndDescription + " in frame " + frame.ToString());                    
+//                }                
+//            }
+//            else
+//                throw new FormatException("rule error: there is no constraint for frame index "+index);            
         }
 
 
@@ -123,6 +165,7 @@ namespace ocpBowling
     public delegate int DelScoreRuleForFrame(Frame frame);
     public delegate int DelBonusRuleForFrame(Frame[] frames, int index);
     
+
 
 
 }
