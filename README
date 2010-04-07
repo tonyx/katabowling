@@ -22,7 +22,7 @@ notes:
 may be there is the need to check a "legacy" source of bowling score calculation. Here there is one:
 http://tralvex.com/pub/bowling/BSC.htm
 
-The code has been tested in dot.net framework 3.5
+The code has been developed in C# 3.5 with dot.net, and also compiled and tested in mono 1.9.1 with Ubuntu s.o.
 
 Seems to me that the solution is already closed to modifications for any new bowling game instance if:
 - the frame cration constraint can be expressed in terms of boolean expression applied to the frame
