@@ -125,26 +125,55 @@ namespace ocpBowling
         }
 
         [Test]
-        public void FramesOverTheFirstAreTheFurtherStrikes()
+        public void ShouldAllowAsMuchFramesAsTheStrikesInTheFirstFrame()
         {
+                                   
             Random random = new Random(DateTime.Now.Millisecond);
-            int strikes = random.Next(0, 10);
+            int strikes = random.Next(0, 13);
 
             List<int> rolls = new List<int>{10};
-            for (int i=0;i<strikes;i++)
-            {
-                rolls.Add(10);
-            }
+            rolls.AddMany(10,strikes);
             rolls.Add(1);
+
             Frame firstFrame = new Frame(rolls);
             geometricBowling.AddFrame(firstFrame);
             Frame following = new Frame(0);
-            for (int i = 0; i < strikes;i++ )
-            {
-                geometricBowling.AddFrame(following);
-            }
+            geometricBowling.AddMany(following, strikes);
+
             Assert.IsTrue(true);
         }
 
+        [Test]
+        [ExpectedException(typeof(FormatException))]
+        public void ShouldNotAllowMoreFramesThanTheStrikesInTheFirstFrame()
+        {
+            Random random = new Random(DateTime.Now.Millisecond);
+            int strikes = random.Next(0, 13);
+            
+            List<int> rolls = new List<int> { 10 };
+            rolls.AddMany(10,strikes);
+            rolls.Add(1);
+
+            Frame firstFrame = new Frame(rolls);
+            geometricBowling.AddFrame(firstFrame);
+            Frame following = new Frame(0);
+            geometricBowling.AddMany(following,strikes);
+
+            // one more. too much, exception raises
+            geometricBowling.AddFrame(following);
+
+        }
+
+    }
+
+    static class RollExtensions
+    {
+        public static void AddMany(this List<int> list, int value, int howmany)
+        {
+            for (int i=0;i<howmany;i++)
+            {
+                list.Add(value);
+            }            
+        }
     }
 }
